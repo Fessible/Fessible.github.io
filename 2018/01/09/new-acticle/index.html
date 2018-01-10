@@ -93,10 +93,10 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnardmev8nj207v01x0si.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnarz2hlmvj209n03uwej.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbhrkgshbj20u01hcaan.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbi887o07j20u01hc0t6.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbjob7v3xj20c002g3ym.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbis1q9ptj205c02ojre.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbitr2kynj209m02xdfv.jpg">
-<meta property="og:updated_time" content="2018-01-10T07:22:42.734Z">
+<meta property="og:updated_time" content="2018-01-10T07:31:41.439Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="状态栏">
 <meta name="twitter:description" content="整理知识有点小累，每次都把网络上找到的内容复制到印象笔记后，想着当天晚上整理下，就没有然后了。上班一点也不累，就是来回坐车太累了，每次坐公交回宿舍都消磨了我所有的精力。回到学校吃个饭，玩耍下就10点了。少年，加油啊。  Android状态栏(Status Bar)颜色 Android在4.4版本推出一个透明状态栏的概念，使手机顶部的状态栏的颜色全透明。 在5.0版本推出了Material Des">
@@ -405,7 +405,7 @@
 <h3 id="改变状态栏颜色"><a href="#改变状态栏颜色" class="headerlink" title="改变状态栏颜色"></a>改变状态栏颜色</h3><p>Android 5.0.+，API 21起，我们可以改变状态栏的颜色</p>
 <p>1.清除透明栏<br>2.添加Flag来设置状态栏<br>3.设置状态栏颜色</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在Android 5.0.1以上使用，改变状态栏颜色</span></span><br><span class="line"></span><br><span class="line">        Window window = getWindow();</span><br><span class="line">        <span class="comment">//取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏</span></span><br><span class="line">        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</span><br><span class="line">        <span class="comment">//需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色</span></span><br><span class="line">        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);</span><br><span class="line">        <span class="comment">//设置状态栏颜色</span></span><br><span class="line">        <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.LOLLIPOP</span>) &#123;</span><br><span class="line">            window.setStatusBarColor(Color.YELLOW);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>在我的Android 7.0上的显示效果（颜色冲击感很强，哈哈）<br><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnbi887o07j20u01hc0t6.jpg" width="300" height="200/"></p>
+<p>在我的Android 7.0上的显示效果（颜色冲击感很强，哈哈）<br><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnbjob7v3xj20c002g3ym.jpg" width="300/"></p>
 <h3 id="Android-6-0字体自动变色"><a href="#Android-6-0字体自动变色" class="headerlink" title="Android 6.0字体自动变色"></a>Android 6.0字体自动变色</h3><p>系统默认状态栏的字体为白色，6.0的API新增了一个属性来解决这一问题。即，如果我们设置的状态栏颜色是接近于白色的话，可以在主题中添加以下属性：</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">"android:windowLightStatusBar"</span>&gt;<span class="literal">true</span>&lt;/<span class="built_in">item</span>&gt;</span><br></pre></td></tr></table></figure>
 <p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnbis1q9ptj205c02ojre.jpg"></p>
