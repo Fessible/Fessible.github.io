@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbi887o07j20u01hc0t6.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbis1q9ptj205c02ojre.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbitr2kynj209m02xdfv.jpg">
-<meta property="og:updated_time" content="2018-01-10T07:11:01.691Z">
+<meta property="og:updated_time" content="2018-01-10T07:16:41.978Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="状态栏">
 <meta name="twitter:description" content="整理知识有点小累，每次都把网络上找到的内容复制到印象笔记后，想着当天晚上整理下，就没有然后了。上班一点也不累，就是来回坐车太累了，每次坐公交回宿舍都消磨了我所有的精力。回到学校吃个饭，玩耍下就10点了。少年，加油啊。  Android状态栏(Status Bar)颜色 Android在4.4版本推出一个透明状态栏的概念，使手机顶部的状态栏的颜色全透明。 在5.0版本推出了Material Des">
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  960
+                  964
                 </span>
               
 
@@ -397,7 +397,7 @@
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>xml中设置状态栏透明通过</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=<span class="string">"android:windowTranslucentStatus"</span>&gt;true&lt;/item&gt;</span><br></pre></td></tr></table></figure>
 <p>在代码中表示为 （注意是4.4.+以上才能实现，最好添加上版本判断）<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置状态栏的颜色透明</span></span><br><span class="line">       Window window = getWindow();</span><br><span class="line">       window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</span><br></pre></td></tr></table></figure></p>
-<h3 id="预留"><a href="#预留" class="headerlink" title="预留"></a>预留</h3><p>当我们在style中添加，系统会为我们预留状态栏的位置，状态栏的颜色时和我们的布局颜色一致的</p>
+<h3 id="预留"><a href="#预留" class="headerlink" title="预留"></a>预留</h3><p>当我们在style中添加下面的内容，系统会为我们预留状态栏的位置，状态栏的颜色和我们的布局颜色一致的</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=<span class="string">"android:fitsSystemWindows"</span>&gt;true&lt;/item&gt;</span><br></pre></td></tr></table></figure>
 <p>添加在总体style中</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Base application theme. --&gt;</span><br><span class="line">    &lt;style name=&quot;BaseTheme&quot; parent=&quot;Theme.AppCompat.Light.NoActionBar&quot;&gt;</span><br><span class="line">        &lt;!-- Customize your theme here. --&gt;</span><br><span class="line">        &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">        &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">        &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">        &lt;item name=&quot;android:fitsSystemWindows&quot;&gt;true&lt;/item&gt;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line"></span><br><span class="line">    &lt;style name=&quot;AppTheme&quot; parent=&quot;BaseTheme&quot;/&gt;</span><br><span class="line">enter code here</span><br></pre></td></tr></table></figure>
