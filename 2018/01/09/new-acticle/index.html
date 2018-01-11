@@ -96,7 +96,13 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbjob7v3xj20c002g3ym.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbis1q9ptj205c02ojre.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnbitr2kynj209m02xdfv.jpg">
-<meta property="og:updated_time" content="2018-01-10T07:31:41.439Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fncepysm52j20bg032mxj.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fncepz5z1vj20bh02rwfn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnceq8jfrrj20bi02pwfe.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fncf2czplmj208c01wjr6.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fncf6uk2oqj208g020dfm.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fncfihpgm6j208m024glf.jpg">
+<meta property="og:updated_time" content="2018-01-11T02:02:49.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="状态栏">
 <meta name="twitter:description" content="整理知识有点小累，每次都把网络上找到的内容复制到印象笔记后，想着当天晚上整理下，就没有然后了。上班一点也不累，就是来回坐车太累了，每次坐公交回宿舍都消磨了我所有的精力。回到学校吃个饭，玩耍下就10点了。少年，加油啊。  Android状态栏(Status Bar)颜色 Android在4.4版本推出一个透明状态栏的概念，使手机顶部的状态栏的颜色全透明。 在5.0版本推出了Material Des">
@@ -346,12 +352,24 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  960
+                  1,195
                 </span>
               
 
               
+                <span class="post-meta-divider">|</span>
+              
 
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
               
             </div>
           
@@ -411,10 +429,24 @@
 <p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnbis1q9ptj205c02ojre.jpg"></p>
 <p>在V23中添加下面的内容</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;style <span class="built_in">name</span>=<span class="string">"AppTheme"</span> parent=<span class="string">"BaseTheme"</span>&gt;</span><br><span class="line">        &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">"android:windowTranslucentStatus"</span>&gt;<span class="literal">true</span>&lt;/<span class="built_in">item</span>&gt;</span><br><span class="line">        &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">"android:windowLightStatusBar"</span>&gt;<span class="literal">true</span>&lt;/<span class="built_in">item</span>&gt;</span><br><span class="line">    &lt;/style&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnbitr2kynj209m02xdfv.jpg"><br>在我的魅族中不需要设置，字体就会自动变色，据说小米也行</p>
+<p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnbitr2kynj209m02xdfv.jpg"> </p>
+<p>在我的魅族中不需要设置，字体就会自动变色，据说小米也行</p>
 <p>代码中设置方式为</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Window</span> <span class="keyword">window</span> = getWindow();</span><br><span class="line"><span class="keyword">View</span> decor = <span class="keyword">window</span>.getDecorView();</span><br><span class="line">       int ui = decor.getSystemUiVisibility();</span><br><span class="line">       <span class="keyword">if</span> (lightBar) &#123;<span class="comment">//状态栏为白色</span></span><br><span class="line">           ui |=<span class="keyword">View</span>.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           ui &amp;= ~<span class="keyword">View</span>.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;</span><br><span class="line">       &#125;</span><br><span class="line">       decor.setSystemUiVisibility(ui);</span><br></pre></td></tr></table></figure>
-
+<h3 id="设置状态栏效果"><a href="#设置状态栏效果" class="headerlink" title="设置状态栏效果"></a>设置状态栏效果</h3><p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fncepysm52j20bg032mxj.jpg" width="300/"><br><img src="http://ww1.sinaimg.cn/large/83029c1egy1fncepz5z1vj20bh02rwfn.jpg" width="300/"><br><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnceq8jfrrj20bi02pwfe.jpg" width="300/"> </p>
+<p>上图分别为简书，UC，网易新闻的状态栏效果</p>
+<p>当我们设置为</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=<span class="string">"android:windowTranslucentStatus"</span>&gt;true&lt;/item&gt;</span><br></pre></td></tr></table></figure>
+<p>我们的布局会顶到状态栏<br><img src="http://ww1.sinaimg.cn/large/83029c1egy1fncf2czplmj208c01wjr6.jpg" width="300/"></p>
+<p>当我们添加了fitSystemWindows留出状态栏的位置，可是状态栏的颜色显示的是背景颜色，并不是我们想要的</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">"android:fitsSystemWindows"</span>&gt;<span class="literal">true</span>&lt;/<span class="built_in">item</span>&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fncf6uk2oqj208g020dfm.jpg" width="300/"></p>
+<p>我们可以采取下面的方式<br>1.设置统一的状态栏颜色<br>2.在状态栏透明的情况下，添加与状态栏高度相同的布局（比较灵活，颜色可多变）</p>
+<h4 id="设置统一的状态栏颜色"><a href="#设置统一的状态栏颜色" class="headerlink" title="设置统一的状态栏颜色"></a>设置统一的状态栏颜色</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=<span class="string">"BaseTheme"</span> parent=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><br><span class="line">       &lt;item name=<span class="string">"colorPrimaryDark"</span>&gt;@<span class="attribute">color</span>/colorAccent&lt;/item&gt;</span><br><span class="line">   &lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>这种方式最简单，我们只需要两步<br>1.设置为NoActionBar的主题<br>2.设置状态栏颜色</p>
+<p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fncfihpgm6j208m024glf.jpg" width="300/"></p>
+<p>（ps：在我的4.4.4的手机上，没有效果）</p>
+<h4 id="添加状态栏高度的布局（推荐）"><a href="#添加状态栏高度的布局（推荐）" class="headerlink" title="添加状态栏高度的布局（推荐）"></a>添加状态栏高度的布局（推荐）</h4>
       
     </div>
     
@@ -454,6 +486,38 @@
       </div>
     
 
+    
+     <div>    
+ 
+     <div>    
+      
+      <ul class="post-copyright">
+         <li class="post-copyright-link">
+          <strong>本文作者：</strong>
+          <a href="/" title="欢迎访问 Fessible 的个人博客">Fessible</a>
+        </li>
+
+        <li class="post-copyright-link">
+          <strong>本文标题：</strong>
+          <a href="http://yoursite.com/2018/01/09/new-acticle/" title="状态栏">状态栏</a>
+        </li>
+
+        <li class="post-copyright-link">
+         <strong>本文链接：</strong>
+          <a href="http://yoursite.com/2018/01/09/new-acticle/" title="状态栏">http://yoursite.com/2018/01/09/new-acticle/</a>
+        </li>
+
+        <li class="post-copyright-date">
+            <strong>发布时间：</strong>2018年1月9日 - 22时01分
+        </li>  
+
+        <li class="post-copyright-license">
+          <strong>版权声明： </strong>
+          本文由 Fessible 原创，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="license" target="_blank">保留署名-非商业性使用-禁止演绎 4.0-国际许可协议</a> </br>转载请保留以上声明信息！
+        </li>
+      </ul>
+    
+  </div>
     
 
     <footer class="post-footer">
@@ -633,7 +697,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android状态栏-Status-Bar-颜色"><span class="nav-number">1.</span> <span class="nav-text">Android状态栏(Status Bar)颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预留"><span class="nav-number">3.</span> <span class="nav-text">预留</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变状态栏颜色"><span class="nav-number">4.</span> <span class="nav-text">改变状态栏颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-6-0字体自动变色"><span class="nav-number">5.</span> <span class="nav-text">Android 6.0字体自动变色</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android状态栏-Status-Bar-颜色"><span class="nav-number">1.</span> <span class="nav-text">Android状态栏(Status Bar)颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预留"><span class="nav-number">3.</span> <span class="nav-text">预留</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变状态栏颜色"><span class="nav-number">4.</span> <span class="nav-text">改变状态栏颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-6-0字体自动变色"><span class="nav-number">5.</span> <span class="nav-text">Android 6.0字体自动变色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置状态栏效果"><span class="nav-number">6.</span> <span class="nav-text">设置状态栏效果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置统一的状态栏颜色"><span class="nav-number">6.1.</span> <span class="nav-text">设置统一的状态栏颜色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加状态栏高度的布局（推荐）"><span class="nav-number">6.2.</span> <span class="nav-text">添加状态栏高度的布局（推荐）</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -668,7 +732,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">1.6k</span>
+    <span title="网站字数统计">1.9k</span>
   
 </div>
 
