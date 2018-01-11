@@ -1952,7 +1952,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #d1f278;
+  background: #4aff7c;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3278,8 +3278,11 @@ pre .javascript .function {
 }
 .content {
   margin-top: 60px;
-  border-radius: 10px;
+  border-radius: 20px;
   background: rgba none repeat scroll !important;
+}
+.content-inner {
+  border-radius: 20px;
 }
 body {
   background: url("/images/background.png") no-repeat;
