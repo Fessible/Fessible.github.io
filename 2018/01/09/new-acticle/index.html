@@ -102,7 +102,8 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fncf2czplmj208c01wjr6.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fncf6uk2oqj208g020dfm.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fncfihpgm6j208m024glf.jpg">
-<meta property="og:updated_time" content="2018-01-11T02:02:49.754Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fndwmzzwkjj208i02qt8j.jpg">
+<meta property="og:updated_time" content="2018-01-12T08:35:08.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="状态栏">
 <meta name="twitter:description" content="整理知识有点小累，每次都把网络上找到的内容复制到印象笔记后，想着当天晚上整理下，就没有然后了。上班一点也不累，就是来回坐车太累了，每次坐公交回宿舍都消磨了我所有的精力。回到学校吃个饭，玩耍下就10点了。少年，加油啊。  Android状态栏(Status Bar)颜色 Android在4.4版本推出一个透明状态栏的概念，使手机顶部的状态栏的颜色全透明。 在5.0版本推出了Material Des">
@@ -352,7 +353,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,195
+                  1,754
                 </span>
               
 
@@ -368,7 +369,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  8
                 </span>
               
             </div>
@@ -433,6 +434,8 @@
 <p>在我的魅族中不需要设置，字体就会自动变色，据说小米也行</p>
 <p>代码中设置方式为</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Window</span> <span class="keyword">window</span> = getWindow();</span><br><span class="line"><span class="keyword">View</span> decor = <span class="keyword">window</span>.getDecorView();</span><br><span class="line">       int ui = decor.getSystemUiVisibility();</span><br><span class="line">       <span class="keyword">if</span> (lightBar) &#123;<span class="comment">//状态栏为白色</span></span><br><span class="line">           ui |=<span class="keyword">View</span>.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           ui &amp;= ~<span class="keyword">View</span>.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;</span><br><span class="line">       &#125;</span><br><span class="line">       decor.setSystemUiVisibility(ui);</span><br></pre></td></tr></table></figure>
+<p>或者直接设置不管什么颜色都设置为黑色字体，只针对 6.0+</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.M</span>) &#123;<span class="comment">//23</span></span><br><span class="line">           getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
 <h3 id="设置状态栏效果"><a href="#设置状态栏效果" class="headerlink" title="设置状态栏效果"></a>设置状态栏效果</h3><p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fncepysm52j20bg032mxj.jpg" width="300/"><br><img src="http://ww1.sinaimg.cn/large/83029c1egy1fncepz5z1vj20bh02rwfn.jpg" width="300/"><br><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnceq8jfrrj20bi02pwfe.jpg" width="300/"> </p>
 <p>上图分别为简书，UC，网易新闻的状态栏效果</p>
 <p>当我们设置为</p>
@@ -446,7 +449,13 @@
 <p>这种方式最简单，我们只需要两步<br>1.设置为NoActionBar的主题<br>2.设置状态栏颜色</p>
 <p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fncfihpgm6j208m024glf.jpg" width="300/"></p>
 <p>（ps：在我的4.4.4的手机上，没有效果）</p>
-<h4 id="添加状态栏高度的布局（推荐）"><a href="#添加状态栏高度的布局（推荐）" class="headerlink" title="添加状态栏高度的布局（推荐）"></a>添加状态栏高度的布局（推荐）</h4>
+<h4 id="添加状态栏高度的布局（推荐）"><a href="#添加状态栏高度的布局（推荐）" class="headerlink" title="添加状态栏高度的布局（推荐）"></a>添加状态栏高度的布局（推荐）</h4><p>当我们设置了信号栏透明，即沉浸式时<br>第一步：获取状态栏的高度，创建一个布局他的高度就是状态栏的高度<br>第二步：在我们每次创建布局的时候都添加上这个布局并设置需要的颜色</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import android.content.Context;</span><br><span class="line">import android.os.Build;</span><br><span class="line">import android.util.AttributeSet;</span><br><span class="line">import android.util.Log;</span><br><span class="line">import android.widget.LinearLayout;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 沉浸式、版本兼容的Toolbar，状态栏透明.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public class CompatToolbar extends LinearLayout &#123;</span><br><span class="line"></span><br><span class="line">    public CompatToolbar(Context context) &#123;</span><br><span class="line">        this(context, null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public CompatToolbar(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        this(context, attrs, 0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public CompatToolbar(Context context, AttributeSet attrs, int defStyleAttr) &#123;</span><br><span class="line">        super(context, attrs, defStyleAttr);</span><br><span class="line">        setup();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setup() &#123;</span><br><span class="line">        int compatPadingTop = 0;</span><br><span class="line">        <span class="comment">// android 4.4以上将Toolbar添加状态栏高度的上边距，沉浸到状态栏下方</span></span><br><span class="line">        <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.KITKAT</span>) &#123;</span><br><span class="line">            compatPadingTop = getStatusBarHeight();</span><br><span class="line">        &#125;</span><br><span class="line">        this.setPadding(getPaddingLeft(), getPaddingTop() + compatPadingTop, getPaddingRight(), getPaddingBottom());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public int getStatusBarHeight() &#123;</span><br><span class="line">        int statusBarHeight = 0;</span><br><span class="line">        <span class="comment">//获取status_bar_height资源的ID</span></span><br><span class="line">        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");</span><br><span class="line">        <span class="keyword">if</span> (resourceId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            statusBarHeight = getResources().getDimensionPixelSize(resourceId);</span><br><span class="line">        &#125;</span><br><span class="line">        Log.d("CompatToolbar", "状态栏高度：" + px2dp(statusBarHeight) + "dp");</span><br><span class="line">        return statusBarHeight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将px转为dp</span></span><br><span class="line">    public <span class="attribute">float</span> px2dp(float pxVal) &#123;</span><br><span class="line">        final float scale = getContext().getResources().getDisplayMetrics().density;</span><br><span class="line">        return (pxVal / scale);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意我这里使用的LinearLayout布局，让该布局位于内容的上方<br>使用方式：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line">&lt;LinearLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    xmlns:tools=<span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">    android:orientation=<span class="string">"vertical"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">    tools:context=<span class="string">"com.example.com.refreshlayout.MainActivity"</span>&gt;</span><br><span class="line">    &lt;com<span class="selector-class">.example</span><span class="selector-class">.com</span><span class="selector-class">.refreshlayout</span><span class="selector-class">.CompatToolbar</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">"@android:color/holo_green_dark"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span>/&gt;</span><br><span class="line">    &lt;Button</span><br><span class="line">        android:text=<span class="string">"@string/app_name"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:text=<span class="string">"Hello World!"</span></span><br><span class="line">        app:layout_constraintBottom_toBottomOf=<span class="string">"parent"</span></span><br><span class="line">        app:layout_constraintLeft_toLeftOf=<span class="string">"parent"</span></span><br><span class="line">        app:layout_constraintRight_toRightOf=<span class="string">"parent"</span></span><br><span class="line">        app:layout_constraintTop_toTopOf=<span class="string">"parent"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fndwmzzwkjj208i02qt8j.jpg"></p>
+<p>这种方式用起来挺不方便的，有没有更好的方式呢？<br>如果状态栏是白色的，系统默认字体颜色时白色的，要如何更改字体颜色呢？本篇有点长，从下一篇介绍吧。</p>
+
       
     </div>
     
@@ -547,6 +556,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/01/11/Android-状态栏2/" rel="prev" title="状态栏2">
+                状态栏2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -626,7 +639,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -648,7 +661,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -732,7 +745,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">1.9k</span>
+    <span title="网站字数统计">2.4k</span>
   
 </div>
 
