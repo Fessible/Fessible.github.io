@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android开发," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考了一些文章做了一些修改，变成了自己的工具类。其中有很多地方欠考虑，有待改进，欢迎路过的大佬给点建议。  状态栏（一）状态栏（二）   经过前两篇的介绍我们对如何修改状态栏的效果有了大致的了解，本篇介绍一种使用更加简单的方式 设置主题效果注意： 要设置fitsSystemWindows为true 1234567&amp;lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.Ap">
+<meta name="keywords" content="Android开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 状态栏工具">
+<meta property="og:url" content="http://www.fessible.club/2018/01/13/状态栏工具/index.html">
+<meta property="og:site_name" content="Fessible&#39;s Blog">
+<meta property="og:description" content="参考了一些文章做了一些修改，变成了自己的工具类。其中有很多地方欠考虑，有待改进，欢迎路过的大佬给点建议。  状态栏（一）状态栏（二）   经过前两篇的介绍我们对如何修改状态栏的效果有了大致的了解，本篇介绍一种使用更加简单的方式 设置主题效果注意： 要设置fitsSystemWindows为true 1234567&amp;lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.Ap">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnf128g3f5j207t0bma9w.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnf14lux49j208g01tq2p.jpg">
+<meta property="og:updated_time" content="2018-01-13T08:01:52.991Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 状态栏工具">
+<meta name="twitter:description" content="参考了一些文章做了一些修改，变成了自己的工具类。其中有很多地方欠考虑，有待改进，欢迎路过的大佬给点建议。  状态栏（一）状态栏（二）   经过前两篇的介绍我们对如何修改状态栏的效果有了大致的了解，本篇介绍一种使用更加简单的方式 设置主题效果注意： 要设置fitsSystemWindows为true 1234567&amp;lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.Ap">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnf128g3f5j207t0bma9w.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fessible.club/2018/01/13/状态栏工具/"/>
+
+
+
+
+
+  <title>Android 状态栏工具 | Fessible's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fessible's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fessible.club/2018/01/13/状态栏工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fessible">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/83029c1egy1fn6w7lq9aoj208c08cmx5.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fessible's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android 状态栏工具</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-13T15:31:49+08:00">
+                2018-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,589
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考了一些文章做了一些修改，变成了自己的工具类。其中有很多地方欠考虑，有待改进，欢迎路过的大佬给点建议。</p>
+</blockquote>
+<p><a href="http://www.fessible.club/2018/01/09/new-acticle/">状态栏（一）</a><br><a href="http://www.fessible.club/2018/01/11/Android-%E7%8A%B6%E6%80%81%E6%A0%8F2/">状态栏（二）</a></p>
+<p>  经过前两篇的介绍我们对如何修改状态栏的效果有了大致的了解，本篇介绍一种使用更加简单的方式</p>
+<h3 id="设置主题效果"><a href="#设置主题效果" class="headerlink" title="设置主题效果"></a>设置主题效果</h3><p><strong>注意：</strong> 要设置fitsSystemWindows为true</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=<span class="string">"AppTheme"</span> parent=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><br><span class="line">        &lt;!-- Customize your theme here. --&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:fitsSystemWindows"</span>&gt;true&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"colorPrimary"</span>&gt;@<span class="attribute">color</span>/colorPrimary&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"colorPrimaryDark"</span>&gt;@<span class="attribute">color</span>/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"colorAccent"</span>&gt;@<span class="attribute">color</span>/colorAccent&lt;/item&gt;</span><br><span class="line">    &lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>参考<a href="https://github.com/jgilfelt/SystemBarTint" target="_blank" rel="noopener">SystemBarTint</a>对状态栏的改变方式，添加下面这个类方法，用来设置 API 19 以上的状态栏效果</p>
+<p>  <img src="http://ww1.sinaimg.cn/large/83029c1egy1fnf128g3f5j207t0bma9w.jpg"></p>
+<p>  我们的界面绘制时在DecorView中的，这个类的核心思想就是：<br>  1.获取DecorView<br>  2.绘制状态栏高度的View<br>  3.将view添加到DecorView中</p>
+<p> 所以我们对状态栏的操作，其实就是对view的操作。在这个类中默认view不显示，改变状态栏的效果时，要调用</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setStatusBarTintEnabled（true）</span><br></pre></td></tr></table></figure>
+<p>注意：使用这个方法的前提是 状态栏是透明的，因为进行了相关的判断（可以自行修改）</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">public class SystemBarTintManager &#123;</span><br><span class="line"></span><br><span class="line">    public static final int DEFAULT_TINT_COLOR = 0x99000000;</span><br><span class="line">    private boolean mStatusBarAvailable;</span><br><span class="line">    private boolean mStatusBarTintEnabled;</span><br><span class="line">    private View mStatusBarTintView;</span><br><span class="line"></span><br><span class="line">    @TargetApi(<span class="number">19</span>)</span><br><span class="line">    public SystemBarTintManager(Activity activity) &#123;</span><br><span class="line"></span><br><span class="line">        Window win = activity.getWindow();</span><br><span class="line">        <span class="comment">//获取DecorView</span></span><br><span class="line">        ViewGroup decorViewGroup = (ViewGroup) win.getDecorView();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.KITKAT</span>) &#123;</span><br><span class="line">            <span class="comment">// 检查主题中是否有透明的状态栏</span></span><br><span class="line">            int[] attrs = &#123;android.R.attr.windowTranslucentStatus&#125;;</span><br><span class="line">            TypedArray a = activity.obtainStyledAttributes(attrs);</span><br><span class="line">            try &#123;</span><br><span class="line">                mStatusBarAvailable = a.getBoolean(0, false);</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                a.recycle();</span><br><span class="line">            &#125;</span><br><span class="line">            WindowManager.LayoutParams winParams = win.getAttributes();</span><br><span class="line">            int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;//状态栏透明</span><br><span class="line">            <span class="keyword">if</span> ((winParams<span class="selector-class">.flags</span> &amp; bits) != <span class="number">0</span>) &#123;</span><br><span class="line">                mStatusBarAvailable = true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mStatusBarAvailable) &#123;</span><br><span class="line">            setupStatusBarView(activity, decorViewGroup);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化状态栏</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param context</span></span><br><span class="line"><span class="comment">     * @param decorViewGroup</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    private void setupStatusBarView(Activity context, ViewGroup decorViewGroup) &#123;</span><br><span class="line">        mStatusBarTintView = new View(context);</span><br><span class="line">        <span class="comment">//设置高度为Statusbar的高度</span></span><br><span class="line">        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, getStatusBarHeight(context));</span><br><span class="line">        params.gravity = Gravity.TOP;</span><br><span class="line">        mStatusBarTintView.setLayoutParams(params);</span><br><span class="line">        mStatusBarTintView.setBackgroundColor(DEFAULT_TINT_COLOR);</span><br><span class="line">        <span class="comment">//默认不显示</span></span><br><span class="line">        mStatusBarTintView.setVisibility(View.GONE);</span><br><span class="line">        <span class="comment">//decorView添加状态栏高度的View</span></span><br><span class="line">        decorViewGroup.addView(mStatusBarTintView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取状态栏高度</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param activity</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    private int getStatusBarHeight(Activity activity) &#123;</span><br><span class="line">        int statusBarHeight = 0;</span><br><span class="line">        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");</span><br><span class="line">        <span class="keyword">if</span> (resourceId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            statusBarHeight = activity.getResources().getDimensionPixelSize(resourceId);</span><br><span class="line">        &#125;</span><br><span class="line">        return statusBarHeight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 显示状态栏</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public void setStatusBarTintEnabled(boolean enabled) &#123;</span><br><span class="line">        mStatusBarTintEnabled = enabled;</span><br><span class="line">        <span class="keyword">if</span> (mStatusBarAvailable) &#123;</span><br><span class="line">            mStatusBarTintView.setVisibility(enabled ? View.VISIBLE : View.GONE);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置状态栏颜色</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param color</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public void setStatusBarTintColor(int <span class="attribute">color</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mStatusBarAvailable) &#123;</span><br><span class="line">            mStatusBarTintView.setBackgroundColor(<span class="attribute">color</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="工具类代码"><a href="#工具类代码" class="headerlink" title="工具类代码"></a>工具类代码</h3><p>在这段代码中当我们的API 为4.4.+ 但是小于 5.0时使用上述的类</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 修改状态栏颜色，支持4.4以上版本</span></span><br><span class="line"><span class="comment">    * @param colorId 颜色</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   public static void setStatusBarColor(Activity activity, int colorId) &#123;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.LOLLIPOP</span>) &#123;</span><br><span class="line">           Window window = activity.getWindow();</span><br><span class="line">           window.setStatusBarColor(colorId);</span><br><span class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.KITKAT</span>) &#123;</span><br><span class="line">           <span class="comment">//使用SystemBarTintManager,需要先将状态栏设置为透明</span></span><br><span class="line">           setTranslucentStatus(activity);</span><br><span class="line">           SystemBarTintManager systemBarTintManager = new SystemBarTintManager(activity);</span><br><span class="line">           systemBarTintManager.setStatusBarTintEnabled(true);//显示状态栏</span><br><span class="line">           systemBarTintManager.setStatusBarTintColor(colorId);//设置状态栏颜色</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line">import android.annotation.TargetApi;</span><br><span class="line">import android.app.Activity;</span><br><span class="line">import android.graphics.Color;</span><br><span class="line">import android.os.Build;</span><br><span class="line">import android.support.annotation.IntDef;</span><br><span class="line">import android.view.View;</span><br><span class="line">import android.view.Window;</span><br><span class="line">import android.view.WindowManager;</span><br><span class="line"></span><br><span class="line">import java.lang.annotation.Retention;</span><br><span class="line">import java.lang.annotation.RetentionPolicy;</span><br><span class="line">import java.lang.reflect.Field;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by rhm on 2018/1/13.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">public class StatusBarUtil &#123;</span><br><span class="line">    public final static int TYPE_MIUI = 0;</span><br><span class="line">    public final static int TYPE_FLYME = 1;</span><br><span class="line">    public final static int TYPE_M = 3;//6.0</span><br><span class="line"></span><br><span class="line">    @IntDef(&#123;TYPE_MIUI,</span><br><span class="line">            TYPE_FLYME,</span><br><span class="line">            TYPE_M&#125;)</span><br><span class="line">    @Retention(RetentionPolicy.SOURCE)</span><br><span class="line">    @interface ViewType &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改状态栏颜色，支持4.4以上版本</span></span><br><span class="line"><span class="comment">     * @param colorId 颜色</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public static void setStatusBarColor(Activity activity, int colorId) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.LOLLIPOP</span>) &#123;</span><br><span class="line">            Window window = activity.getWindow();</span><br><span class="line">            window.setStatusBarColor(colorId);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.KITKAT</span>) &#123;</span><br><span class="line">            <span class="comment">//使用SystemBarTintManager,需要先将状态栏设置为透明</span></span><br><span class="line">            setTranslucentStatus(activity);</span><br><span class="line">            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(activity);</span><br><span class="line">            systemBarTintManager.setStatusBarTintEnabled(true);//显示状态栏</span><br><span class="line">            systemBarTintManager.setStatusBarTintColor(colorId);//设置状态栏颜色</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置状态栏透明</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    @TargetApi(<span class="number">19</span>)</span><br><span class="line">    public static void setTranslucentStatus(Activity activity) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5.0以上系统状态栏透明</span></span><br><span class="line">        <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.LOLLIPOP</span>) &#123;</span><br><span class="line">            Window window = activity.getWindow();</span><br><span class="line">            <span class="comment">//清除透明状态栏</span></span><br><span class="line">            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</span><br><span class="line">            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span><br><span class="line">                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);</span><br><span class="line">            <span class="comment">//设置状态栏颜色必须添加</span></span><br><span class="line">            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);</span><br><span class="line">            window.setStatusBarColor(Color.TRANSPARENT);//设置透明</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.KITKAT</span>) &#123; <span class="comment">//19</span></span><br><span class="line">            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置沉浸式状态栏</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param fontIconDark 状态栏字体和图标颜色是否为深色</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public static void setImmersiveStatusBar(Activity activity,boolean fontIconDark) &#123;</span><br><span class="line">        setTranslucentStatus(activity);</span><br><span class="line">        <span class="keyword">if</span> (fontIconDark) &#123;</span><br><span class="line">            <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.M</span>) &#123;</span><br><span class="line">                setStatusBarFontIconDark(activity,TYPE_M);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (OSUtils.isMiui()) &#123;</span><br><span class="line">                setStatusBarFontIconDark(activity,TYPE_MIUI);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (OSUtils.isFlyme()) &#123;</span><br><span class="line">                setStatusBarFontIconDark(activity,TYPE_FLYME);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;<span class="comment">//其他情况下我们将状态栏设置为灰色，就不会看不见字体</span></span><br><span class="line">                setStatusBarColor(activity,Color.LTGRAY);//灰色</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置文字颜色</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public static void setStatusBarFontIconDark(Activity activity,@ViewType int type) &#123;</span><br><span class="line">        switch (type) &#123;</span><br><span class="line">            case TYPE_MIUI:</span><br><span class="line">                setMiuiUI(activity,true);</span><br><span class="line">                break;</span><br><span class="line">            case TYPE_M:</span><br><span class="line">                setCommonUI(activity);</span><br><span class="line">                break;</span><br><span class="line">            case TYPE_FLYME:</span><br><span class="line">                setFlymeUI(activity,true);</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置6.0的字体</span></span><br><span class="line">    public static void setCommonUI(Activity activity) &#123;</span><br><span class="line">        <span class="keyword">if</span> (Build<span class="selector-class">.VERSION</span><span class="selector-class">.SDK_INT</span> &gt;= Build<span class="selector-class">.VERSION_CODES</span><span class="selector-class">.M</span>) &#123;</span><br><span class="line">            activity.getWindow().getDecorView().setSystemUiVisibility(</span><br><span class="line">                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span><br><span class="line">                            | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置Flyme的字体</span></span><br><span class="line">    public static void setFlymeUI(Activity activity,boolean dark) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Window window = activity.getWindow();</span><br><span class="line">            WindowManager.LayoutParams lp = window.getAttributes();</span><br><span class="line">            Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");</span><br><span class="line">            Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");</span><br><span class="line">            darkFlag.setAccessible(true);</span><br><span class="line">            meizuFlags.setAccessible(true);</span><br><span class="line">            int bit = darkFlag.getInt(null);</span><br><span class="line">            int value = meizuFlags.getInt(lp);</span><br><span class="line">            <span class="keyword">if</span> (dark) &#123;</span><br><span class="line">                value |= bit;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                value &amp;= ~bit;</span><br><span class="line">            &#125;</span><br><span class="line">            meizuFlags.setInt(lp, value);</span><br><span class="line">            window.setAttributes(lp);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置MIUI字体</span></span><br><span class="line">    public static void setMiuiUI(Activity activity,boolean dark) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Window window = activity.getWindow();</span><br><span class="line">            Class clazz = activity.getWindow().getClass();</span><br><span class="line">            Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");</span><br><span class="line">            Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");</span><br><span class="line">            int darkModeFlag = field.getInt(layoutParams);</span><br><span class="line">            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);</span><br><span class="line">            <span class="keyword">if</span> (dark) &#123;    <span class="comment">//状态栏亮色且黑色字体</span></span><br><span class="line">                extraFlagField.invoke(window, darkModeFlag, darkModeFlag);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                extraFlagField.invoke(window, 0, darkModeFlag);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        StatusBarUtil.setImmersiveStatusBar(this,true);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fnf14lux49j208g01tq2p.jpg"></p>
+<p>请在<a href="https://github.com/Fessible/StatusBarUtil" target="_blank" rel="noopener">github</a>上下载完整的内容，<a href="https://github.com/Fessible/StatusBarUtil/tree/master/statusbarutil" target="_blank" rel="noopener">工具类在statusbarutil中</a>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Fessible 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Fessible 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+     
+ 
+     <div>    
+      
+      <ul class="post-copyright">
+         <li class="post-copyright-link">
+          <strong>本文作者：</strong>
+          <a href="/" title="欢迎访问 Fessible 的个人博客">Fessible</a>
+        </li>
+
+        <li class="post-copyright-link">
+          <strong>本文标题：</strong>
+          <a href="http://www.fessible.club/2018/01/13/状态栏工具/" title="Android 状态栏工具">Android 状态栏工具</a>
+        </li>
+
+        <li class="post-copyright-link">
+         <strong>本文链接：</strong>
+          <a href="http://www.fessible.club/2018/01/13/状态栏工具/" title="Android 状态栏工具">http://www.fessible.club/2018/01/13/状态栏工具/</a>
+        </li>
+
+        <li class="post-copyright-date">
+            <strong>发布时间：</strong>2018年1月13日 - 15时01分
+        </li>  
+
+        <li class="post-copyright-license">
+          <strong>版权声明： </strong>
+          本文由 Fessible 原创，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="license" target="_blank">保留署名-非商业性使用-禁止演绎 4.0-国际许可协议</a> </br>转载请保留以上声明信息！
+        </li>
+      </ul>
+    
+  </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android开发/" rel="tag"><i class="fa fa-tag"></i> Android开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/11/Android-状态栏2/" rel="next" title="状态栏——字体颜色变黑">
+                <i class="fa fa-chevron-left"></i> 状态栏——字体颜色变黑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ww1.sinaimg.cn/large/83029c1egy1fn6w7lq9aoj208c08cmx5.jpg"
+                alt="Fessible" />
+            
+              <p class="site-author-name" itemprop="name">Fessible</p>
+              <p class="site-description motion-element" itemprop="description">纸上得来终觉浅，绝知此事要躬行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Fessible" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/2197986334/profile?topnav=1&wvr=6" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置主题效果"><span class="nav-number">1.</span> <span class="nav-text">设置主题效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具类代码"><span class="nav-number">2.</span> <span class="nav-text">工具类代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方式"><span class="nav-number">3.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果"><span class="nav-number">4.</span> <span class="nav-text">效果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fessible</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">网站字数统计&#58;</span>
+    
+    <span title="网站字数统计">5.8k</span>
+  
+</div>
+
+
+  <div class="theme-info">访问量 &mdash; </a></div>
+<span id="busuanzi_container_site_uv">
+  <span id="busuanzi_value_site_uv"></span>
+</span>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2155026"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
