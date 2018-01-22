@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android开发," />
 
 
 
@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="纸上得来终觉浅，绝知此事要躬行">
+<meta name="description" content="上一篇我们知道了SurfaceView的基本使用方法，SurfaceView由于使用的是独立的绘图层，并且使用独立的线程去进行绘制，不能进行Transition，Rotation，Scale等变换，这就导致一个问题SurfaceView在滑动的时候，SurfaceView的刷新由于不受主线程控制导致SurfaceView在滑动的时候会出现黑边的情况。 VideoView继承自SurfaceView">
+<meta name="keywords" content="Android开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TextureView使用">
+<meta property="og:title" content="自定义视频播放器——TextureView使用">
 <meta property="og:url" content="http://www.fessible.club/2018/01/22/TextureView使用/index.html">
 <meta property="og:site_name" content="Fessible&#39;s Blog">
-<meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行">
+<meta property="og:description" content="上一篇我们知道了SurfaceView的基本使用方法，SurfaceView由于使用的是独立的绘图层，并且使用独立的线程去进行绘制，不能进行Transition，Rotation，Scale等变换，这就导致一个问题SurfaceView在滑动的时候，SurfaceView的刷新由于不受主线程控制导致SurfaceView在滑动的时候会出现黑边的情况。 VideoView继承自SurfaceView">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-22T07:38:14.476Z">
+<meta property="og:image" content="http://www.fessible.club/2018/01/22/TextureView使用/surfaceview.gif">
+<meta property="og:updated_time" content="2018-01-22T09:54:16.682Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TextureView使用">
-<meta name="twitter:description" content="纸上得来终觉浅，绝知此事要躬行">
+<meta name="twitter:title" content="自定义视频播放器——TextureView使用">
+<meta name="twitter:description" content="上一篇我们知道了SurfaceView的基本使用方法，SurfaceView由于使用的是独立的绘图层，并且使用独立的线程去进行绘制，不能进行Transition，Rotation，Scale等变换，这就导致一个问题SurfaceView在滑动的时候，SurfaceView的刷新由于不受主线程控制导致SurfaceView在滑动的时候会出现黑边的情况。 VideoView继承自SurfaceView">
+<meta name="twitter:image" content="http://www.fessible.club/2018/01/22/TextureView使用/surfaceview.gif">
 
 
 
@@ -125,7 +128,7 @@
 
 
 
-  <title>TextureView使用 | Fessible's Blog</title>
+  <title>自定义视频播放器——TextureView使用 | Fessible's Blog</title>
   
 
 
@@ -269,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">TextureView使用</h1>
+          <h1 class="post-title" itemprop="name headline">自定义视频播放器——TextureView使用</h1>
         
 
         <div class="post-meta">
@@ -292,6 +295,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android视频开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android视频开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -313,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  574
                 </span>
               
 
@@ -329,7 +354,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -350,7 +375,18 @@
       
 
       
-        
+        <p>上一篇我们知道了SurfaceView的基本使用方法，SurfaceView由于使用的是独立的绘图层，并且使用独立的线程去进行绘制，不能进行Transition，Rotation，Scale等变换，这就导致一个问题SurfaceView在滑动的时候，SurfaceView的刷新由于不受主线程控制导致SurfaceView在滑动的时候会出现黑边的情况。</p>
+<p>VideoView继承自SurfaceView，也不能像View一样在列表中滑动。<br><a href="https://www.jianshu.com/p/f91778a45b84" target="_blank" rel="noopener">这篇文章介绍了TextureView</a>，并给了效果图<br><img src="/2018/01/22/TextureView使用/surfaceview.gif" alt=""></p>
+<h3 id="什么是TextureView"><a href="#什么是TextureView" class="headerlink" title="什么是TextureView"></a>什么是TextureView</h3><p>TextureView是在4.0(API level 14)引入的，与SurfaceView相比，它不会创建新的窗口来显示内容。它是将内容流直接投放到View中，并且可以和其它普通View一样进行移动，旋转，缩放，动画等变化。<strong>TextureView必须在硬件加速的窗口中使用。</strong>现在的移动设备基本都有GPU进行硬件加速渲染。</p>
+<h3 id="SurfaceTexture"><a href="#SurfaceTexture" class="headerlink" title="SurfaceTexture"></a>SurfaceTexture</h3><p>在<a href="http://www.fessible.club/2018/01/21/SurfaceView%E7%9A%84%E4%BD%BF%E7%94%A8/#more">这篇文章</a>中，我们已经知道了Surface是内存中一段绘图缓冲区<br>那么SurfaceTexture是什么呢？<br>SurfaceTexture用来捕获视频流中的图像帧，视频流可以是相机预览或者是视频解码数据。<br>TextureView可以通过getSurfaceTexture()方法来获取TextureView相应的SurfaceTexture。</p>
+<p>因此我们使用TextureView时，首先要获取到用于渲染内容的SurfaceTexture。具体做法是先创建TextureView对象，然后实现SurfaceTextureListener接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">   setContentView(R.main_layout);</span><br><span class="line">   myTexture = <span class="keyword">new</span> TextureView(<span class="keyword">this</span>);</span><br><span class="line">   myTexture.setSurfaceTextureListener(<span class="keyword">this</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>Activity implements了SurfaceTextureListener接口因此activity中需要重写如下方法：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Override</span></span><br><span class="line">public void onSurfaceTextureAvailable(SurfaceTexture arg0, int arg1, int arg2) &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">@Override</span></span><br><span class="line">public boolean onSurfaceTextureDestroyed(SurfaceTexture arg0) &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">@Override</span></span><br><span class="line">public void onSurfaceTextureSizeChanged(SurfaceTexture arg0, int arg1,int arg2) &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">@Override</span></span><br><span class="line">public void onSurfaceTextureUpdated(SurfaceTexture arg0) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这篇文章介绍了<a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1213/2153.html" target="_blank" rel="noopener">TextureView基本使用方法</a></p>
+<h3 id="TextureView与MediaPlayer结合"><a href="#TextureView与MediaPlayer结合" class="headerlink" title="TextureView与MediaPlayer结合"></a>TextureView与MediaPlayer结合</h3><p>通过上面对SurfaceTexture的介绍，我们可以理解为：<br>SurfaceTexture是数据通道，把数据源MediaPlayer中获取到的图像帧数据转化为GL外部纹理。<br>TextureView是显示层，显示图像帧，从而实现视频播放功能。</p>
+<p>由于SurfaceTexture的准备就绪、大小变化、销毁、更新等状态变化时都会回调相对应的方法。<br>所以我们要等到onSurfaceTextureAvailable被调用时，将SurfaceTexture关联MediaPlayer，作为播放视频的图像数据来源</p>
+
       
     </div>
     
@@ -403,12 +439,12 @@
 
         <li class="post-copyright-link">
           <strong>本文标题：</strong>
-          <a href="http://www.fessible.club/2018/01/22/TextureView使用/" title="TextureView使用">TextureView使用</a>
+          <a href="http://www.fessible.club/2018/01/22/TextureView使用/" title="自定义视频播放器——TextureView使用">自定义视频播放器——TextureView使用</a>
         </li>
 
         <li class="post-copyright-link">
          <strong>本文链接：</strong>
-          <a href="http://www.fessible.club/2018/01/22/TextureView使用/" title="TextureView使用">http://www.fessible.club/2018/01/22/TextureView使用/</a>
+          <a href="http://www.fessible.club/2018/01/22/TextureView使用/" title="自定义视频播放器——TextureView使用">http://www.fessible.club/2018/01/22/TextureView使用/</a>
         </li>
 
         <li class="post-copyright-date">
@@ -426,6 +462,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Android开发/" rel="tag"><i class="fa fa-tag"></i> Android开发</a>
+          
+        </div>
+      
 
       
       
@@ -435,8 +477,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/21/SurfaceView的使用/" rel="next" title="SurfaceView的使用">
-                <i class="fa fa-chevron-left"></i> SurfaceView的使用
+              <a href="/2018/01/21/SurfaceView的使用/" rel="next" title="自定义视频播放器——SurfaceView的使用">
+                <i class="fa fa-chevron-left"></i> 自定义视频播放器——SurfaceView的使用
               </a>
             
           </div>
@@ -445,8 +487,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/22/自定义VideoView/" rel="prev" title="自定义VideoView">
-                自定义VideoView <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/22/自定义VideoView/" rel="prev" title="自定义视频播放器——TextureView+MediaPlayer">
+                自定义视频播放器——TextureView+MediaPlayer <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -504,8 +546,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -598,6 +649,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是TextureView"><span class="nav-number">1.</span> <span class="nav-text">什么是TextureView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SurfaceTexture"><span class="nav-number">2.</span> <span class="nav-text">SurfaceTexture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TextureView与MediaPlayer结合"><span class="nav-number">3.</span> <span class="nav-text">TextureView与MediaPlayer结合</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -626,7 +693,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">9.8k</span>
+    <span title="网站字数统计">10.4k</span>
   
 </div>
 
