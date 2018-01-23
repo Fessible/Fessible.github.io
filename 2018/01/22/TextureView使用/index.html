@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.fessible.club/2018/01/22/TextureView使用/surfaceview.gif">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fnqiwtacpuj207h0c9tfh.jpg">
-<meta property="og:updated_time" content="2018-01-23T06:28:07.896Z">
+<meta property="og:updated_time" content="2018-01-23T14:44:06.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义视频播放器——TextureView使用">
 <meta name="twitter:description" content="上一篇我们知道了SurfaceView的基本使用方法，SurfaceView由于使用的是独立的绘图层，并且使用独立的线程去进行绘制，不能进行Transition，Rotation，Scale等变换，这就导致一个问题SurfaceView在滑动的时候，SurfaceView的刷新由于不受主线程控制导致SurfaceView在滑动的时候会出现黑边的情况。 VideoView继承自SurfaceView">
@@ -339,7 +339,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,146
+                  1,166
                 </span>
               
 
@@ -355,7 +355,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  6
                 </span>
               
             </div>
@@ -388,7 +388,8 @@
 <h3 id="TextureView与MediaPlayer结合"><a href="#TextureView与MediaPlayer结合" class="headerlink" title="TextureView与MediaPlayer结合"></a>TextureView与MediaPlayer结合</h3><p>通过上面对SurfaceTexture的介绍，我们可以理解为：<br>SurfaceTexture是数据通道，把数据源MediaPlayer中获取到的图像帧数据转化为GL外部纹理。<br>TextureView是显示层，显示图像帧，从而实现视频播放功能。</p>
 <p>由于SurfaceTexture的准备就绪、大小变化、销毁、更新等状态变化时都会回调相对应的方法。<br>所以我们要等到onSurfaceTextureAvailable被调用时，将SurfaceTexture关联MediaPlayer，作为播放视频的图像数据来源</p>
 <p><strong>注意</strong><br>当遇见有声音无图像的情况时，可能是TextureView未创建，初始化，或者是SurfaceTexture未关联到MediaPlayer。有声音说明MediaPlayer数据源存在，无图像说明显示层TextureView未成功初始化或者未关联到MediaPlayer。</p>
-<h4 id="小例子"><a href="#小例子" class="headerlink" title="小例子"></a>小例子</h4><p>使用步骤</p>
+<h4 id="小例子"><a href="#小例子" class="headerlink" title="小例子"></a>小例子</h4><p><strong>使用的时候注意要配置权限</strong><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=<span class="string">"android.permission.INTERNET"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>使用步骤</p>
 <ol>
 <li>在布局中添加TextureView</li>
 <li>创建MediaPlayer</li>
