@@ -87,10 +87,13 @@
 <meta property="og:site_name" content="Fessible&#39;s Blog">
 <meta property="og:description" content="本篇参考封装一个视频播放器，原文已经写的非常棒了，本篇加入了个人对其内容的理解。秉承不重复造轮子的良好理念，接下来开始拆解轮子。内容非常多，我都差点放弃写，有耐心的请往下看  github上非常棒的视频相关开源项目有:最炫的哔哩哔哩的ijkplayerJiaoziVideoPlayer 基于ijkplayerGSYVideoPlayer 基于ijkplayer 结合前三篇内容，我们已经对Medi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-25T09:20:44.214Z">
+<meta property="og:image" content="http://www.fessible.club/2018/01/22/自定义VideoView/img4.gif">
+<meta property="og:image" content="http://www.fessible.club/2018/01/22/自定义VideoView/img2.gif">
+<meta property="og:updated_time" content="2018-01-30T08:40:52.921Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义视频播放器——TextureView+MediaPlayer自定义视频播放器">
 <meta name="twitter:description" content="本篇参考封装一个视频播放器，原文已经写的非常棒了，本篇加入了个人对其内容的理解。秉承不重复造轮子的良好理念，接下来开始拆解轮子。内容非常多，我都差点放弃写，有耐心的请往下看  github上非常棒的视频相关开源项目有:最炫的哔哩哔哩的ijkplayerJiaoziVideoPlayer 基于ijkplayerGSYVideoPlayer 基于ijkplayer 结合前三篇内容，我们已经对Medi">
+<meta name="twitter:image" content="http://www.fessible.club/2018/01/22/自定义VideoView/img4.gif">
 
 
 
@@ -336,7 +339,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5,674
+                  5,678
                 </span>
               
 
@@ -462,6 +465,9 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;LinearLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:tools=<span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">    tools:context=<span class="string">"com.example.com.simplenicevideoplayer.MainActivity"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;com.example.com.videoplayer.NiceVideoPlayer</span><br><span class="line">        android:id=<span class="string">"@+id/nice_video_player"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"200dp"</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="regexp">/LinearLayout&gt;</span></span><br></pre></td></tr></table></figure>
 <h4 id="列表使用方式"><a href="#列表使用方式" class="headerlink" title="列表使用方式"></a>列表使用方式</h4><p>注意:添加回收</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">recyclerView.setRecyclerListener(<span class="keyword">new</span> RecyclerView.RecyclerListener() &#123;</span><br><span class="line">          @Override</span><br><span class="line">          public <span class="keyword">void</span> onViewRecycled(RecyclerView.ViewHolder holder) &#123;</span><br><span class="line">              <span class="keyword">if</span> (holder <span class="keyword">instanceof</span> TestAdapter.ViewHolder) &#123;</span><br><span class="line">                  NiceVideoPlayer niceVideoPlayer = ((TestAdapter.ViewHolder) holder).niceVideoPlayer;</span><br><span class="line">                  <span class="keyword">if</span> (niceVideoPlayer == NiceVideoPlayerManager.instance().getCurrentNiceVideoPlayer()) &#123;</span><br><span class="line">                      NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br></pre></td></tr></table></figure>
+<p>效果显示</p>
+<p><img src="/2018/01/22/自定义VideoView/img4.gif" alt=""></p>
+<p><img src="/2018/01/22/自定义VideoView/img2.gif" alt=""></p>
 <p>到此为止，整个自定义视频播放器的流程我们已经基本掌握了。想要优化视频播放器可以去看JiaoziVideoPlayer等开源视频播放器的源码。</p>
 <p>本篇基于<a href="https://github.com/xiaoyanger0825/NiceVieoPlayer" target="_blank" rel="noopener">NiceVideoPlayer</a>源码，也可以去我的库中查看加了注释的<a href="https://github.com/Fessible/SimpleNiceVideoPlayer" target="_blank" rel="noopener">简化版SimpleNiceVideoPlayer</a>。</p>
 
@@ -565,6 +571,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/01/29/自定义下拉刷新/" rel="prev" title="自定义下拉刷新——事件分发与滑动冲突">
+                自定义下拉刷新——事件分发与滑动冲突 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -649,7 +659,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -660,7 +670,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -767,7 +777,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">16.6k</span>
+    <span title="网站字数统计">20.2k</span>
   
 </div>
 
