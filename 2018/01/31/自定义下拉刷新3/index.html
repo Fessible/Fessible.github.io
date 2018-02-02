@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Fessible&#39;s Blog">
 <meta property="og:description" content="首先我们简单介绍下SwipeRefreshLayout的使用。了解SwipeRefreshLayout的使用后，再看看SwipeRefreshLayout的源码，参考SwipeRefreshLayout源码，我们再进一步修下拉刷新组件。 SwipeRefreshLayout的使用SwipeRefreshLayout是Google官方推出的一款下拉刷新组件，位于v4兼容包下，android.supp">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-31T08:39:40.658Z">
+<meta property="og:updated_time" content="2018-02-02T02:39:50.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义下拉刷新——自定义下拉刷新组件进阶">
 <meta name="twitter:description" content="首先我们简单介绍下SwipeRefreshLayout的使用。了解SwipeRefreshLayout的使用后，再看看SwipeRefreshLayout的源码，参考SwipeRefreshLayout源码，我们再进一步修下拉刷新组件。 SwipeRefreshLayout的使用SwipeRefreshLayout是Google官方推出的一款下拉刷新组件，位于v4兼容包下，android.supp">
@@ -336,7 +336,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  449
+                  612
                 </span>
               
 
@@ -352,7 +352,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -379,6 +379,18 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;android.support.v4.widget.SwipeRefreshLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:id=<span class="string">"@+id/refresh_layout"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ListView</span><br><span class="line">        android:id=<span class="string">"@+id/list_view"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="regexp">/android.support.v4.widget.SwipeRefreshLayout&gt;</span></span><br></pre></td></tr></table></figure>
 <p>主要代码如下，。通过设置OnRefreshListener来监听界面的滑动从而实现刷新。，在刷新监听中处理我们的刷新数据 和 刷新进度的关闭。<br>其中：<br>setRefreshing(true)，展开刷新动画。<br>setRefreshing(false)，取消刷新动画。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">RefreshActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    private List&lt;<span class="built_in">String</span>&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    private boolean isRefresh = <span class="literal">false</span>;</span><br><span class="line">    private SwipeRefreshLayout swipeRefreshLayout;</span><br><span class="line">    private ArrayAdapter&lt;<span class="built_in">String</span>&gt; arrayAdapter;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected <span class="keyword">void</span> onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_refresh_layout);</span><br><span class="line">        initListView();</span><br><span class="line">        swipeRefreshLayout = findViewById(R.id.refresh_layout);</span><br><span class="line">        swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED);<span class="comment">//设置刷新动画的颜色</span></span><br><span class="line">        swipeRefreshLayout.setOnRefreshListener(refreshListener);<span class="comment">//设置刷新监听</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private SwipeRefreshLayout.OnRefreshListener refreshListener = <span class="keyword">new</span> SwipeRefreshLayout.OnRefreshListener() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public <span class="keyword">void</span> onRefresh() &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isRefresh) &#123;</span><br><span class="line">                isRefresh = <span class="literal">true</span>;</span><br><span class="line">                <span class="comment">//3秒后刷新内容，并关闭动画</span></span><br><span class="line">                <span class="keyword">new</span> Handler().postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public <span class="keyword">void</span> run() &#123;</span><br><span class="line">                        swipeRefreshLayout.setRefreshing(<span class="literal">false</span>); <span class="comment">//关闭动画</span></span><br><span class="line">                        data.add(<span class="string">"这是新的数据"</span>);</span><br><span class="line">                        arrayAdapter.notifyDataSetChanged();</span><br><span class="line">                        isRefresh = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, <span class="number">3000</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    private <span class="keyword">void</span> initListView() &#123;</span><br><span class="line">        initData();</span><br><span class="line">        ListView listView = findViewById(R.id.list_view);</span><br><span class="line">        arrayAdapter = <span class="keyword">new</span> ArrayAdapter&lt;<span class="built_in">String</span>&gt;(<span class="keyword">this</span>, android.R.layout.simple_expandable_list_item_1, data);</span><br><span class="line">        listView.setAdapter(arrayAdapter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private <span class="keyword">void</span> initData() &#123;</span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            data.add(<span class="string">"hehe-&gt;"</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="SwipeRefreshLayout-提供的方法"><a href="#SwipeRefreshLayout-提供的方法" class="headerlink" title="SwipeRefreshLayout 提供的方法"></a>SwipeRefreshLayout 提供的方法</h4><ul>
+<li><p><strong>isRefreshing()</strong>：  判断当前的状态是否是刷新状态。</p>
+</li>
+<li><p><strong>setColorSchemeResources(int… colorResIds)</strong>：设置下拉进度条的颜色主题，参数为可变参数，并且是资源id，可以设置多种不同的颜色，每转一圈就显示一种颜色。</p>
+</li>
+<li><p><strong>setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener listener)</strong>： 设置监听，需要重写onRefresh()方法，顶部下拉时会调用这个方法，在里面实现请求数据的逻辑，设置下拉进度条消失等等。</p>
+</li>
+<li><p><strong>setProgressBackgroundColorSchemeResource(int colorRes)</strong>：设置下拉进度条的背景颜色，默认白色。</p>
+</li>
+<li><p><strong>setRefreshing(boolean refreshing)</strong>： 设置刷新状态，true表示正在刷新，false表示取消刷新。</p>
+</li>
+</ul>
 <h3 id="SwipeRefreshLayout-源码解析"><a href="#SwipeRefreshLayout-源码解析" class="headerlink" title="SwipeRefreshLayout 源码解析"></a>SwipeRefreshLayout 源码解析</h3><p><a href="https://github.com/scwang90/SmartRefreshLayout" target="_blank" rel="noopener">github上优秀的SmartRefreshLayout</a>，实现了许多炫酷的效果。</p>
 <p>  参考文章：</p>
 <p>  <a href="https://www.jianshu.com/p/d23b42b6360b" target="_blank" rel="noopener">SwipeRefreshLayout使用</a></p>
@@ -650,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SwipeRefreshLayout的使用"><span class="nav-number">1.</span> <span class="nav-text">SwipeRefreshLayout的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SwipeRefreshLayout-源码解析"><span class="nav-number">2.</span> <span class="nav-text">SwipeRefreshLayout 源码解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SwipeRefreshLayout的使用"><span class="nav-number">1.</span> <span class="nav-text">SwipeRefreshLayout的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SwipeRefreshLayout-提供的方法"><span class="nav-number">1.1.</span> <span class="nav-text">SwipeRefreshLayout 提供的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SwipeRefreshLayout-源码解析"><span class="nav-number">2.</span> <span class="nav-text">SwipeRefreshLayout 源码解析</span></a></li></ol></div>
             
 
           </div>
@@ -685,7 +697,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">23.7k</span>
+    <span title="网站字数统计">23.9k</span>
   
 </div>
 
