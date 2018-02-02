@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android开发," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="上一篇文章介绍了 事件分发机制 和 滑动冲突的解决方案，本篇文章开启自定义下拉刷新之旅。首先，我们看效果图。 在自定义下拉刷新时，我们通过使用Scroller 来滑动布局。接下来，我们先了解Scroller的使用。 Scroller这篇文章郭霖 完全解析Scroller，详细地介绍了Scroller。使用Scroller的步骤非常简单：  创建Scroller的实例  调用startScroll(">
+<meta name="keywords" content="Android开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义下拉刷新——自定义简单的下拉刷新组件">
+<meta property="og:url" content="http://www.fessible.club/2018/01/31/自定义下拉刷新2/index.html">
+<meta property="og:site_name" content="Fessible&#39;s Blog">
+<meta property="og:description" content="上一篇文章介绍了 事件分发机制 和 滑动冲突的解决方案，本篇文章开启自定义下拉刷新之旅。首先，我们看效果图。 在自定义下拉刷新时，我们通过使用Scroller 来滑动布局。接下来，我们先了解Scroller的使用。 Scroller这篇文章郭霖 完全解析Scroller，详细地介绍了Scroller。使用Scroller的步骤非常简单：  创建Scroller的实例  调用startScroll(">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.fessible.club/2018/01/31/自定义下拉刷新2/viewpager.gif">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1ely1fo0pxas6b9j209u08xq2u.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1ely1fo0q6bqj7aj20a30ab3yj.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1ely1fo0s1yxmdtj20lk0bm0sz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1ely1fo0s465echj20au0963yg.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1ely1fo0sdalwtvj20m40bsaaa.jpg">
+<meta property="og:image" content="http://www.fessible.club/2018/01/31/自定义下拉刷新2/simple.gif">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fo1u7qj3vdj204f0d4dfo.jpg">
+<meta property="og:image" content="http://www.fessible.club/2018/01/31/自定义下拉刷新2/refresh.gif">
+<meta property="og:updated_time" content="2018-02-02T02:13:27.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义下拉刷新——自定义简单的下拉刷新组件">
+<meta name="twitter:description" content="上一篇文章介绍了 事件分发机制 和 滑动冲突的解决方案，本篇文章开启自定义下拉刷新之旅。首先，我们看效果图。 在自定义下拉刷新时，我们通过使用Scroller 来滑动布局。接下来，我们先了解Scroller的使用。 Scroller这篇文章郭霖 完全解析Scroller，详细地介绍了Scroller。使用Scroller的步骤非常简单：  创建Scroller的实例  调用startScroll(">
+<meta name="twitter:image" content="http://www.fessible.club/2018/01/31/自定义下拉刷新2/viewpager.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.fessible.club/2018/01/31/自定义下拉刷新2/"/>
+
+
+
+
+
+  <title>自定义下拉刷新——自定义简单的下拉刷新组件 | Fessible's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fessible's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.fessible.club/2018/01/31/自定义下拉刷新2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fessible">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/83029c1egy1fn6w7lq9aoj208c08cmx5.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fessible's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义下拉刷新——自定义简单的下拉刷新组件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-31T11:33:05+08:00">
+                2018-01-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android自定义View/" itemprop="url" rel="index">
+                    <span itemprop="name">Android自定义View</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,075
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇文章介绍了 事件分发机制 和 滑动冲突的解决方案，本篇文章开启自定义下拉刷新之旅。首先，我们看效果图。</p>
+<p>在自定义下拉刷新时，我们通过使用Scroller 来滑动布局。接下来，我们先了解Scroller的使用。</p>
+<h3 id="Scroller"><a href="#Scroller" class="headerlink" title="Scroller"></a>Scroller</h3><p>这篇文章<a href="http://blog.csdn.net/guolin_blog/article/details/48719871" target="_blank" rel="noopener">郭霖 完全解析Scroller</a>，详细地介绍了Scroller。<br>使用Scroller的步骤非常简单：</p>
+<ol>
+<li>创建Scroller的实例 </li>
+<li>调用startScroll()方法来初始化滚动数据并刷新界面 </li>
+<li>重写computeScroll()方法，并在其内部完成平滑滚动的逻辑 </li>
+</ol>
+<p>同时我们要注意到ScrollTo 表示滚动到指定位置，ScrollBy表示每次滚动一段距离。</p>
+<p>我们自定义一个ScrollerLayout来模拟ViewPager的滑动切换效果。</p>
+<p><img src="/2018/01/31/自定义下拉刷新2/viewpager.gif" alt=""></p>
+<p>布局如下，在ScrollerLayout中嵌套了三个Button</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;com.example.com.myapplication.view.ScrollerLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;Button</span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"100dp"</span></span><br><span class="line">        android:text=<span class="string">"This is first child view"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;Button</span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"100dp"</span></span><br><span class="line">        android:text=<span class="string">"This is second child view"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;Button</span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"100dp"</span></span><br><span class="line">        android:text=<span class="string">"This is third child view"</span> /&gt;</span><br><span class="line">&lt;<span class="regexp">/com.example.com.myapplication.view.ScrollerLayout&gt;</span></span><br></pre></td></tr></table></figure>
+<p>由于Button是可点击的，它会消费点击事件，导致ScrollerLayout 不能调用OnTouchEvent。根据上篇文章介绍的 事件拦截机制和滑动冲突解决方案，我们必须在自定义ScrollerLayout添加拦截事件，即在ScrollerLayout滑动时进行拦截</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean onInterceptTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">    int x = (int) ev.getRawX();</span><br><span class="line">    <span class="keyword">switch</span> (ev.getAction()) &#123;</span><br><span class="line">        <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">            mLastX = x;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">            int deltaX = x - mLastX;<span class="comment">//拦截横向滑动事件</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(deltaX) &gt; mTouchSlop) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>左边界</strong><br>当我们处于第一个界面，向右滑动<br><img src="http://ww1.sinaimg.cn/large/83029c1ely1fo0pxas6b9j209u08xq2u.jpg"></p>
+<p>很明显<br>scrolledX = LastX - X &lt; 0<br>getScroller()+ScrolledX &lt; 0 &lt;LeftBorder<br>此时我们让界面滑动到左边距</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (getScrollX() + scrolledX &lt; mLeftBorder) &#123; <span class="comment">//左边界</span></span><br><span class="line">                   scrollTo(mLeftBorder, <span class="number">0</span>);</span><br><span class="line">                   <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">               &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>右边界</strong><br>当我们处于最后一个界面，向左滑动</p>
+<p><img src="http://ww1.sinaimg.cn/large/83029c1ely1fo0q6bqj7aj20a30ab3yj.jpg"></p>
+<p>scrolledX = LastX - X &gt; 0</p>
+<p>我们要控制<br>getScroller + scrolledX + getWidth &gt; rightBorder</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (getScrollX() + getWidth() + scrolledX &gt; mRightBorder) &#123;<span class="comment">// 右边界</span></span><br><span class="line">                    scrollTo(mRightBorder - getWidth(), <span class="number">0</span>);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ScrollerLayout</span> <span class="keyword">extends</span> <span class="title">ViewGroup</span> </span>&#123;</span><br><span class="line">    private <span class="keyword">static</span> <span class="built_in">String</span> TAG = <span class="string">"ScrollerLayout"</span>;</span><br><span class="line"></span><br><span class="line">    private Scroller mScroller;</span><br><span class="line">    private int mTouchSlop;<span class="comment">//最小的滑动距离</span></span><br><span class="line"></span><br><span class="line">    private int mLeftBorder;</span><br><span class="line">    private int mRightBorder;</span><br><span class="line"></span><br><span class="line">    public ScrollerLayout(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">        mScroller = <span class="keyword">new</span> Scroller(context);</span><br><span class="line">        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();</span><br><span class="line">        Log.d(TAG, <span class="string">"最小滑动距离: TouchSlop "</span> + mTouchSlop);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected <span class="keyword">void</span> onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        int childCount = getChildCount();</span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">            View child = getChildAt(i);</span><br><span class="line">            measureChild(child, widthMeasureSpec, heightMeasureSpec);<span class="comment">//测量子View</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected <span class="keyword">void</span> onLayout(boolean changed, int l, int t, int r, int b) &#123;</span><br><span class="line">        <span class="keyword">if</span> (changed) &#123;</span><br><span class="line">            int childCount = getChildCount();</span><br><span class="line">            <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">                View child = getChildAt(i);</span><br><span class="line">                child.layout(i * child.getMeasuredWidth(), <span class="number">0</span>, (i + <span class="number">1</span>) * child.getMeasuredWidth(), child.getMeasuredHeight());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//初始化左右边界的值</span></span><br><span class="line">            mLeftBorder = getChildAt(<span class="number">0</span>).getLeft();</span><br><span class="line">            mRightBorder = getChildAt(childCount - <span class="number">1</span>).getRight();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private int mLastX;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean onInterceptTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">        int x = (int) ev.getRawX();</span><br><span class="line">        <span class="keyword">switch</span> (ev.getAction()) &#123;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">                mLastX = x;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">                int deltaX = x - mLastX;<span class="comment">//拦截横向滑动事件</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(deltaX) &gt; mTouchSlop) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean onTouchEvent(MotionEvent event) &#123;</span><br><span class="line">        int x = (int) event.getRawX();</span><br><span class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">                int scrolledX = mLastX - x;<span class="comment">//mLast是拦截时 ACTION_DOWN 的值，向右滑动时为负数，向左滑动为正数</span></span><br><span class="line">                <span class="keyword">if</span> (getScrollX() + scrolledX &lt; mLeftBorder) &#123; <span class="comment">//左边界</span></span><br><span class="line">                    scrollTo(mLeftBorder, <span class="number">0</span>);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (getScrollX() + getWidth() + scrolledX &gt; mRightBorder) &#123;<span class="comment">// 右边界</span></span><br><span class="line">                    scrollTo(mRightBorder - getWidth(), <span class="number">0</span>);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                scrollBy(scrolledX, <span class="number">0</span>);</span><br><span class="line">                mLastX = x;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">                <span class="comment">//根据当前滚动值来判定哪个子控件的界面</span></span><br><span class="line">                int targetIndex = (getScrollX() + getWidth() / <span class="number">2</span>) / getWidth(); <span class="comment">//滑动到屏幕的1/2进行切换</span></span><br><span class="line">                int dx = targetIndex * getWidth() - getScrollX();</span><br><span class="line">                mScroller.startScroll(getScrollX(), <span class="number">0</span>, dx, <span class="number">0</span>);</span><br><span class="line">                invalidate();<span class="comment">//刷新</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onTouchEvent(event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public <span class="keyword">void</span> computeScroll() &#123;</span><br><span class="line">        <span class="keyword">if</span> (mScroller.computeScrollOffset()) &#123;</span><br><span class="line">            scrollTo(mScroller.getCurrX(), mScroller.getCurrY());</span><br><span class="line">            invalidate();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>getScrollerX/Y</strong><br>使用Scroller的过程中反复地使用到了getScrollerX()/getScrollerY()<br>下面我们以getScrollerY为例进行解释，getScrollerY获取的到底是什么值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Return the scrolled top position of this view. This is the top edge of</span></span><br><span class="line"><span class="comment">     * the displayed part of your view. You do not need to draw any pixels above</span></span><br><span class="line"><span class="comment">     * it, since those are outside of the frame of your view on screen.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @return The top edge of the displayed part of your view, in pixels.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public final int getScrollY() &#123;</span><br><span class="line">        <span class="keyword">return</span> mScrollY;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>源码中给了其中的解释，意思是 View顶部和显示界面的距离。下面我们通过一张图片更直观地理解到底getScrollY获取的是什么值。</p>
+<p><img src="http://ww1.sinaimg.cn/large/83029c1ely1fo0s1yxmdtj20lk0bm0sz.jpg"></p>
+<p><img src="http://ww1.sinaimg.cn/large/83029c1ely1fo0s465echj20au0963yg.jpg"></p>
+<p>当上滑时，超出屏幕的距离就是 getScroller的值，为<strong>正数</strong><br>当下滑时，超出屏幕的距离也是 getScroller的值，为<strong>负数</strong></p>
+<p>那么Scroller.startScroll(0, getScrollerY(), 0, dy),这里 dy 起到的作用是什么呢？</p>
+<p>通过这句代码，我们实现的操作是<br>getScrollerY+dy </p>
+<p>假设 getScrollerY 值为 200， dy的值为200 ，执行这句代码后我们的变化如下：<br><img src="http://ww1.sinaimg.cn/large/83029c1ely1fo0sdalwtvj20m40bsaaa.jpg"></p>
+<p><strong>注意</strong><br>执行Scroller.startScroll(0, getScrollerY(), 0, dy)后要 调用invalidate进行刷新。</p>
+<p><strong>computeScroll()</strong><br>这个函数的作用是什么呢？为什么要重写？ 实际上它才是决定 我们调用Scroller.startScroll(0, getScrollerY(), 0, dy) 实现滑动的决定因素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">   public <span class="keyword">void</span> computeScroll() &#123;</span><br><span class="line">       <span class="keyword">if</span> (mScroller.computeScrollOffset()) &#123;</span><br><span class="line">           scrollTo(<span class="number">0</span>, mScroller.getCurrY());</span><br><span class="line">           invalidate();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>注意这行代码，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrollTo(<span class="number">0</span>, mScroller.getCurrY());</span><br></pre></td></tr></table></figure></p>
+<p>mScroller.getCurrY 的值为前面我们计算的getScrollerY+dy 值。 scrollTo()表示移动到指定位置。 所以当我们使用Scroller.startScroll() 后会自动调用computeScroll() 来实现我们的滑动效果。 </p>
+<p><strong>因此，我们在使用Scroller的时候要重写computeScroll(),在使用后一定要记得 invalid 进行重绘</strong></p>
+<h3 id="自定义简单的下拉刷新组件"><a href="#自定义简单的下拉刷新组件" class="headerlink" title="自定义简单的下拉刷新组件"></a>自定义简单的下拉刷新组件</h3><p>效果图</p>
+<p><img src="/2018/01/31/自定义下拉刷新2/simple.gif" alt=""></p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p><img src="http://ww1.sinaimg.cn/large/83029c1egy1fo1u7qj3vdj204f0d4dfo.jpg"></p>
+<p>初始化时，我们的屏幕显示的是 带颜色的这块内容。当我们向下滑动的时候显示头部内容，向上滑动时显示底部内容。</p>
+<p>所以在自定的 SimpleRefreshLayout时，我们动态添加了头部和底部。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public SimpleRefreshLayout(Context context, AttributeSet attrs) &#123;</span><br><span class="line">       <span class="keyword">super</span>(context, attrs);</span><br><span class="line">       mHeader = LayoutInflater.from(context).inflate(R.layout.item_header_layout, <span class="literal">null</span>);</span><br><span class="line">       pullText = mHeader.findViewById(R.id.srl_tv_pull_down);</span><br><span class="line">       mFooter = LayoutInflater.from(context).inflate(R.layout.item_footer_layout, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">       mLayoutScroller = <span class="keyword">new</span> Scroller(context);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @Override</span><br><span class="line">   protected <span class="keyword">void</span> onFinishInflate() &#123;</span><br><span class="line">       <span class="keyword">super</span>.onFinishInflate();</span><br><span class="line">       RelativeLayout.LayoutParams params = <span class="keyword">new</span> RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);</span><br><span class="line">       mHeader.setLayoutParams(params);</span><br><span class="line">       mFooter.setLayoutParams(params);</span><br><span class="line">       addView(mHeader);</span><br><span class="line">       addView(mFooter);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>注意我们添加头部和顶部是在 onFinishInflate()这个函数中。<br>onFinishInflate()何时调用？为什么要用onFinishInflate()?</p>
+<p>在我们使用View.inflate(context,R.layout.view_layout,null); View中的所有控件被映射成xml，在加载完成xml后，就会执行这个方法。也就是初始化布局后执行。</p>
+<p>在此处使用OnFinishInflate() 是为了保证 头部和底部 布局已经被初始化后再添加到 SimplerRefreshLayout中。</p>
+<h4 id="测量"><a href="#测量" class="headerlink" title="测量"></a>测量</h4><p>重写OnMeasure 来测量子类<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">  protected <span class="keyword">void</span> onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">      <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">      <span class="comment">//测量子类</span></span><br><span class="line">      <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">          View child = getChildAt(i);</span><br><span class="line">          measureChild(child, widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h4><p>为了在初始状态只显示我们的 内容界面，<br>header的位置为 （0，-height，getWidth，0）<br>footer的位置为  （0，getHeight,getWidth, getHeight+height）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//布局</span></span><br><span class="line"> @Override</span><br><span class="line"> protected <span class="keyword">void</span> onLayout(boolean changed, int l, int t, int r, int b) &#123;</span><br><span class="line">     mLayoutContentHeight = <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">         View child = getChildAt(i);</span><br><span class="line">         <span class="keyword">if</span> (child == mHeader) &#123;</span><br><span class="line">             child.layout(<span class="number">0</span>, <span class="number">0</span> - child.getMeasuredHeight(), child.getMeasuredWidth(), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">         &#125; <span class="keyword">else</span> <span class="keyword">if</span> (child == mFooter) &#123;</span><br><span class="line">             child.layout(<span class="number">0</span>, mLayoutContentHeight, child.getMeasuredWidth(), child.getMeasuredHeight() + mLayoutContentHeight);</span><br><span class="line"></span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;<span class="comment">//内容</span></span><br><span class="line">             child.layout(<span class="number">0</span>, mLayoutContentHeight, child.getMeasuredWidth(), mLayoutContentHeight + child.getMeasuredHeight());</span><br><span class="line">             mLayoutContentHeight += child.getMeasuredHeight();</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="滑动"><a href="#滑动" class="headerlink" title="滑动"></a>滑动</h4><p>根据滑动的方向，我们来 切换滑动效果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int dy = mLastMoveY - y;</span><br></pre></td></tr></table></figure>
+<p>向下滑动时，dy<0; 向上滑动时，dy="">0;<br>为了控制顶部最多只能滑动到头部高度的一半 我们使用了下面判断</0;></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">Math</span>.abs(getScrollY()) &lt;= mHeader.getMeasuredHeight() / <span class="number">2</span>) &#123;</span><br><span class="line">                        scrollBy(<span class="number">0</span>, dy);</span><br><span class="line">                    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们还可以设置 有效距离effectiveScrollY，当未超过effectiveScrollY， 不显示头部，这个操作主要是在ACTION_UP做处理：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">Math</span>.abs(getScrollY()) &gt;= effectiveScrollY) &#123;</span><br><span class="line">                       mLayoutScroller.startScroll(<span class="number">0</span>, getScrollY(), <span class="number">0</span>, -getScrollY() - effectiveScrollY); <span class="comment">//显示一部分头部</span></span><br><span class="line">                       invalidate();</span><br><span class="line">                   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                       mLayoutScroller.startScroll(<span class="number">0</span>, getScrollY(), <span class="number">0</span>, -getScrollY()); <span class="comment">//回到原来位置</span></span><br><span class="line">                       invalidate();</span><br><span class="line">                   &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="设置回调监听"><a href="#设置回调监听" class="headerlink" title="设置回调监听"></a>设置回调监听</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public interface onRefreshListener &#123;</span><br><span class="line">       <span class="keyword">void</span> onRefresh();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">void</span> onBottomRefresh();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public <span class="keyword">void</span> setRefreshListener(onRefreshListener listener) &#123;</span><br><span class="line">       mRefreshListener = listener;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">SimpleRefreshLayout</span> <span class="keyword">extends</span> <span class="title">ViewGroup</span> </span>&#123;</span><br><span class="line">    private View mHeader;</span><br><span class="line">    private View mFooter;</span><br><span class="line">    private TextView pullText;</span><br><span class="line">    private onRefreshListener mRefreshListener;</span><br><span class="line">    private int mLastMoveY;</span><br><span class="line">    private int effectiveScrollY = <span class="number">100</span>;</span><br><span class="line">    private Scroller mLayoutScroller;</span><br><span class="line">    private boolean isPullDown = <span class="literal">false</span>;</span><br><span class="line">    private int mLayoutContentHeight;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public SimpleRefreshLayout(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">        mHeader = LayoutInflater.from(context).inflate(R.layout.item_header_layout, <span class="literal">null</span>);</span><br><span class="line">        pullText = mHeader.findViewById(R.id.srl_tv_pull_down);</span><br><span class="line">        mFooter = LayoutInflater.from(context).inflate(R.layout.item_footer_layout, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">        mLayoutScroller = <span class="keyword">new</span> Scroller(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected <span class="keyword">void</span> onFinishInflate() &#123;</span><br><span class="line">        <span class="keyword">super</span>.onFinishInflate();</span><br><span class="line">        RelativeLayout.LayoutParams params = <span class="keyword">new</span> RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);</span><br><span class="line">        mHeader.setLayoutParams(params);</span><br><span class="line">        mFooter.setLayoutParams(params);</span><br><span class="line">        addView(mHeader);</span><br><span class="line">        addView(mFooter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected <span class="keyword">void</span> onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        <span class="comment">//测量子类</span></span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">            View child = getChildAt(i);</span><br><span class="line">            measureChild(child, widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//布局</span></span><br><span class="line">    @Override</span><br><span class="line">    protected <span class="keyword">void</span> onLayout(boolean changed, int l, int t, int r, int b) &#123;</span><br><span class="line">        mLayoutContentHeight = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">            View child = getChildAt(i);</span><br><span class="line">            <span class="keyword">if</span> (child == mHeader) &#123;</span><br><span class="line">                child.layout(<span class="number">0</span>, <span class="number">0</span> - child.getMeasuredHeight(), child.getMeasuredWidth(), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (child == mFooter) &#123;</span><br><span class="line">                child.layout(<span class="number">0</span>, mLayoutContentHeight, child.getMeasuredWidth(), child.getMeasuredHeight() + mLayoutContentHeight);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;<span class="comment">//内容</span></span><br><span class="line">                child.layout(<span class="number">0</span>, mLayoutContentHeight, child.getMeasuredWidth(), mLayoutContentHeight + child.getMeasuredHeight());</span><br><span class="line">                mLayoutContentHeight += child.getMeasuredHeight();</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean onTouchEvent(MotionEvent event) &#123;</span><br><span class="line">        int y = (int) event.getY();</span><br><span class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">                mLastMoveY = y;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">                int dy = mLastMoveY - y;</span><br><span class="line">                <span class="keyword">if</span> (dy &lt; <span class="number">0</span>) &#123;<span class="comment">//下拉</span></span><br><span class="line">                    isPullDown = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(getScrollY()) &lt;= mHeader.getMeasuredHeight() / <span class="number">2</span>) &#123;</span><br><span class="line">                        scrollBy(<span class="number">0</span>, dy);</span><br><span class="line">                        <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(getScrollY()) &gt;= effectiveScrollY) &#123;</span><br><span class="line">                            pullText.setText(<span class="string">"松开刷新"</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;<span class="comment">//上滑</span></span><br><span class="line">                    <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(getScrollY()) + <span class="built_in">Math</span>.abs(dy) &lt; mFooter.getMeasuredHeight() / <span class="number">2</span>) &#123;</span><br><span class="line">                        scrollBy(<span class="number">0</span>, dy);</span><br><span class="line">                        isPullDown = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (isPullDown) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(getScrollY()) &gt;= effectiveScrollY) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (mRefreshListener != <span class="literal">null</span>) &#123;</span><br><span class="line">                            mRefreshListener.onRefresh();</span><br><span class="line">                        &#125;</span><br><span class="line">                        mLayoutScroller.startScroll(<span class="number">0</span>, getScrollY(), <span class="number">0</span>, -getScrollY() - effectiveScrollY);</span><br><span class="line">                        invalidate();</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        mLayoutScroller.startScroll(<span class="number">0</span>, getScrollY(), <span class="number">0</span>, -getScrollY());</span><br><span class="line">                        invalidate();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(getScrollY()) &gt;= effectiveScrollY) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (mRefreshListener != <span class="literal">null</span>) &#123;</span><br><span class="line">                            mRefreshListener.onBottomRefresh();</span><br><span class="line">                        &#125;</span><br><span class="line">                        mLayoutScroller.startScroll(<span class="number">0</span>, getScrollY(), <span class="number">0</span>, -getScrollY() + effectiveScrollY);</span><br><span class="line">                        invalidate();</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        mLayoutScroller.startScroll(<span class="number">0</span>, getScrollY(), <span class="number">0</span>, -getScrollY());</span><br><span class="line">                        invalidate();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mLastMoveY = y;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public <span class="keyword">void</span> computeScroll() &#123;</span><br><span class="line">        <span class="keyword">super</span>.computeScroll();</span><br><span class="line">        <span class="keyword">if</span> (mLayoutScroller.computeScrollOffset()) &#123;</span><br><span class="line">            scrollTo(<span class="number">0</span>, mLayoutScroller.getCurrY());</span><br><span class="line">        &#125;</span><br><span class="line">        invalidate();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	 public <span class="keyword">void</span> stopRefresh() &#123;</span><br><span class="line">        mLayoutScroller.startScroll(<span class="number">0</span>, getScrollY(), <span class="number">0</span>, -getScrollY());</span><br><span class="line">        invalidate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public interface onRefreshListener &#123;</span><br><span class="line">        <span class="keyword">void</span> onRefresh();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">void</span> onBottomRefresh();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setRefreshListener(onRefreshListener listener) &#123;</span><br><span class="line">        mRefreshListener = listener;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>头部布局item_header_layout</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;RelativeLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">    android:paddingBottom=<span class="string">"5dp"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=<span class="string">"@+id/srl_tv_pull_down"</span></span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"@dimen/srl_pull_tv_height"</span></span><br><span class="line">        android:layout_alignParentBottom=<span class="string">"true"</span></span><br><span class="line">        android:layout_centerHorizontal=<span class="string">"true"</span></span><br><span class="line">        android:drawableLeft=<span class="string">"@drawable/srl_arrow_down"</span></span><br><span class="line">        android:gravity=<span class="string">"center_vertical"</span></span><br><span class="line">        android:text=<span class="string">"@string/srl_keep_pull_down"</span></span><br><span class="line">        android:textColor=<span class="string">"@color/srl_text_color"</span></span><br><span class="line">        android:textSize=<span class="string">"@dimen/srl_text_size"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="regexp">/RelativeLayout&gt;</span></span><br></pre></td></tr></table></figure>
+<p>底部布局item_footer_layout</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;RelativeLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">    android:background=<span class="string">"@color/srl_pull_background"</span></span><br><span class="line">    android:paddingTop=<span class="string">"@dimen/srl_footer_padding_top"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;RelativeLayout</span><br><span class="line">        android:layout_centerHorizontal=<span class="string">"true"</span></span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;ProgressBar</span><br><span class="line">            android:id=<span class="string">"@+id/bottom_progress"</span></span><br><span class="line">            android:layout_width=<span class="string">"30dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"30dp"</span></span><br><span class="line">             /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_centerHorizontal=<span class="string">"true"</span></span><br><span class="line">            android:layout_toRightOf=<span class="string">"@id/bottom_progress"</span></span><br><span class="line">            android:text=<span class="string">"加载更多"</span></span><br><span class="line">            android:textSize=<span class="string">"18sp"</span> /&gt;</span><br><span class="line">    &lt;<span class="regexp">/RelativeLayout&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;/</span>RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>主布局activity_refresh_layout</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;com.example.com.myapplication.view.SimpleRefreshLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:id=<span class="string">"@+id/refresh_layout"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">            &lt;ImageView</span><br><span class="line">			   android:id=<span class="string">"@+id/image"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">                android:background=<span class="string">"@drawable/f"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="regexp">/com.example.com.myapplication.view.SimpleRefreshLayout&gt;</span></span><br></pre></td></tr></table></figure>
+<p>主代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">RefreshActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    private SimpleRefreshLayout simpleRefreshLayout;</span><br><span class="line">    private ImageView imageView;</span><br><span class="line"></span><br><span class="line">    private Handler mHandler = <span class="keyword">new</span> Handler();</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected <span class="keyword">void</span> onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_refresh_layout);</span><br><span class="line">        simpleRefreshLayout = findViewById(R.id.refresh_layout);</span><br><span class="line">        imageView = findViewById(R.id.image);</span><br><span class="line">        simpleRefreshLayout.setRefreshListener(<span class="keyword">new</span> SimpleRefreshLayout.onRefreshListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public <span class="keyword">void</span> onRefresh() &#123;</span><br><span class="line">                mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public <span class="keyword">void</span> run() &#123;</span><br><span class="line">                        simpleRefreshLayout.stopRefresh();</span><br><span class="line">                        imageView.setBackgroundResource(R.drawable.d);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, <span class="number">2000</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public <span class="keyword">void</span> onBottomRefresh() &#123;</span><br><span class="line">                mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public <span class="keyword">void</span> run() &#123;</span><br><span class="line">                        simpleRefreshLayout.stopRefresh();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, <span class="number">2000</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/01/31/自定义下拉刷新2/refresh.gif" alt=""></p>
+<p>本篇给出了自定义下拉刷新组件的思路，并给出了非常简单的小例子。实现的只是简单的 全屏图片时，下拉刷新上拉加载的效果。下一篇，我们将会 加入 嵌套布局时，滑动冲突判断，实现更加有意义的下拉刷新组件。</p>
+<p>参考文章：<br><a href="http://blog.csdn.net/ghost_programmer/article/details/52682252" target="_blank" rel="noopener">自定义下拉刷新组件</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Fessible 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Fessible 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+     
+ 
+     <div>    
+      
+      <ul class="post-copyright">
+         <li class="post-copyright-link">
+          <strong>本文作者：</strong>
+          <a href="/" title="欢迎访问 Fessible 的个人博客">Fessible</a>
+        </li>
+
+        <li class="post-copyright-link">
+          <strong>本文标题：</strong>
+          <a href="http://www.fessible.club/2018/01/31/自定义下拉刷新2/" title="自定义下拉刷新——自定义简单的下拉刷新组件">自定义下拉刷新——自定义简单的下拉刷新组件</a>
+        </li>
+
+        <li class="post-copyright-link">
+         <strong>本文链接：</strong>
+          <a href="http://www.fessible.club/2018/01/31/自定义下拉刷新2/" title="自定义下拉刷新——自定义简单的下拉刷新组件">http://www.fessible.club/2018/01/31/自定义下拉刷新2/</a>
+        </li>
+
+        <li class="post-copyright-date">
+            <strong>发布时间：</strong>2018年1月31日 - 11时01分
+        </li>  
+
+        <li class="post-copyright-license">
+          <strong>版权声明： </strong>
+          本文由 Fessible 原创，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="license" target="_blank">保留署名-非商业性使用-禁止演绎 4.0-国际许可协议</a> </br>转载请保留以上声明信息！
+        </li>
+      </ul>
+    
+  </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android开发/" rel="tag"><i class="fa fa-tag"></i> Android开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/29/自定义下拉刷新/" rel="next" title="自定义下拉刷新——事件分发与滑动冲突">
+                <i class="fa fa-chevron-left"></i> 自定义下拉刷新——事件分发与滑动冲突
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/31/自定义下拉刷新3/" rel="prev" title="自定义下拉刷新——自定义下拉刷新组件进阶">
+                自定义下拉刷新——自定义下拉刷新组件进阶 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ww1.sinaimg.cn/large/83029c1egy1fn6w7lq9aoj208c08cmx5.jpg"
+                alt="Fessible" />
+            
+              <p class="site-author-name" itemprop="name">Fessible</p>
+              <p class="site-description motion-element" itemprop="description">纸上得来终觉浅，绝知此事要躬行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Fessible" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/fessible_max" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/2197986334/profile?topnav=1&wvr=6" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/users/01425028c405/timeline" target="_blank" title="Jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>Jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scroller"><span class="nav-number">1.</span> <span class="nav-text">Scroller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义简单的下拉刷新组件"><span class="nav-number">2.</span> <span class="nav-text">自定义简单的下拉刷新组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">2.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测量"><span class="nav-number">2.2.</span> <span class="nav-text">测量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#布局"><span class="nav-number">2.3.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滑动"><span class="nav-number">2.4.</span> <span class="nav-text">滑动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置回调监听"><span class="nav-number">2.5.</span> <span class="nav-text">设置回调监听</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fessible</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">网站字数统计&#58;</span>
+    
+    <span title="网站字数统计">23.7k</span>
+  
+</div>
+
+
+  <div class="theme-info">访问量 &mdash; </a></div>
+<span id="busuanzi_container_site_uv">
+  <span id="busuanzi_value_site_uv"></span>
+</span>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2155026"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>

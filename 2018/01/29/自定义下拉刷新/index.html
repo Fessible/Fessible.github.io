@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1ely1fnyhps9ddcj20a1078aa3.jpg">
 <meta property="og:image" content="http://www.fessible.club/2018/01/29/自定义下拉刷新/normal.gif">
 <meta property="og:image" content="http://www.fessible.club/2018/01/29/自定义下拉刷新/normal.gif">
-<meta property="og:updated_time" content="2018-01-30T09:16:10.790Z">
+<meta property="og:updated_time" content="2018-01-31T07:45:29.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义下拉刷新——事件分发与滑动冲突">
 <meta name="twitter:description" content="自定义下拉刷新组件之前，必须要了解什么是事件分发机制。按照顺序阅读，看完郭霖 事件分发机制上，郭霖 事件分发机制下，和鸿洋 事件分发机制上，鸿洋 事件分发机制下以后结合Android开发艺术探索和源码，然后看事件分发机制总结这篇，基本能够掌握事件分发机制了。 事件分发机制的内容对于初学者而言，是反复看，实践过后再理解便能掌握其原理。下面我们简要介绍下事件分发机制，具体内容，请按顺序反复阅读上面提及">
@@ -345,7 +345,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,586
+                  3,587
                 </span>
               
 
@@ -434,7 +434,7 @@
 <p>接下来我们看onTouchEvent，源码很长，我们截取一部分看，</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">public boolean onTouchEvent(MotionEvent event) &#123;  </span><br><span class="line">    final int viewFlags = mViewFlags;  </span><br><span class="line">    <span class="keyword">if</span> ((viewFlags &amp; ENABLED_MASK) == DISABLED) &#123;  </span><br><span class="line">        <span class="comment">// A disabled view that is clickable still consumes the touch  </span></span><br><span class="line">        <span class="comment">// events, it just doesn't respond to them.  </span></span><br><span class="line">        <span class="keyword">return</span> (((viewFlags &amp; CLICKABLE) == CLICKABLE ||  </span><br><span class="line">                (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE));  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">if</span> (mTouchDelegate != <span class="literal">null</span>) &#123;  </span><br><span class="line">        <span class="keyword">if</span> (mTouchDelegate.onTouchEvent(event)) &#123;  </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">     <span class="comment">//如果该控件是可以点击的就会进入到下两行的switch判断中去；</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (((viewFlags &amp; CLICKABLE) == CLICKABLE ||  </span><br><span class="line">            (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)) &#123;  </span><br><span class="line">    <span class="comment">//如果当前的事件是抬起手指，则会进入到MotionEvent.ACTION_UP这个case当中。</span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;  </span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:  </span><br><span class="line">                ......</span><br><span class="line">                        <span class="keyword">if</span> (!focusTaken) &#123;  </span><br><span class="line">                  </span><br><span class="line">                            <span class="keyword">if</span> (mPerformClick == <span class="literal">null</span>) &#123;  </span><br><span class="line">                                mPerformClick = <span class="keyword">new</span> PerformClick();  </span><br><span class="line">                            &#125;  </span><br><span class="line">                            <span class="keyword">if</span> (!post(mPerformClick)) &#123;  </span><br><span class="line">       </span><br><span class="line">            <span class="comment">//performClick会调用 onClick</span></span><br><span class="line">                                performClick();  </span><br><span class="line">                            &#125;  </span><br><span class="line">                        &#125;  </span><br><span class="line">                    &#125;  </span><br><span class="line">                  .....</span><br><span class="line">                <span class="keyword">break</span>;  </span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:  </span><br><span class="line">              ....</span><br><span class="line">                <span class="keyword">break</span>;  </span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_CANCEL:  </span><br><span class="line">              ......</span><br><span class="line">                <span class="keyword">break</span>;  </span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:  </span><br><span class="line">        	.....</span><br><span class="line">                <span class="keyword">break</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line"><span class="comment">//如果该控件是可以点击的，就一定会返回true</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码中我们可以发现 只要进入 if (((viewFlags &amp; CLICKABLE) == CLICKABLE ||<br>            (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)) ，返回值就为true，表明了只要View为<strong>可点击</strong>的，那么onTouchEvent 一定会 <strong>返回true</strong>，也就是一定会 <strong>消费事件</strong>。这也就解释了上面 点击Button 触发onTouchEvent 不调用 ViewGroup和Activity onTouchEvent的原因了。</p>
-<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>我们只到MotionEvent 主要有以下三个事件</p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>我们知道MotionEvent 主要有以下三个事件</p>
 <ul>
 <li>ACTION_DOWN</li>
 <li>ACTION_MOVE</li>
@@ -499,7 +499,7 @@
 <p>效果如图</p>
 <p><img src="/2018/01/29/自定义下拉刷新/normal.gif" alt=""></p>
 <p>外部拦截方法比内部拦截更加简单，建议使用外部拦截方法来解决滑动冲突的问题。</p>
-<p>懂得什么是事件分发机制和如何解决滑动冲突，接下来，我们开始自定义下拉刷新组件。</p>
+<p>懂得了什么是事件分发机制和如何解决滑动冲突，下一篇，我们开始自定义下拉刷新组件。</p>
 
       
     </div>
@@ -601,6 +601,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/01/31/自定义下拉刷新2/" rel="prev" title="自定义下拉刷新——自定义简单的下拉刷新组件">
+                自定义下拉刷新——自定义简单的下拉刷新组件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -685,7 +689,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -803,7 +807,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">20.2k</span>
+    <span title="网站字数统计">23.7k</span>
   
 </div>
 
