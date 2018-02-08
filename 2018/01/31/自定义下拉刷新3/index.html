@@ -82,7 +82,7 @@
 <meta name="description" content="上一篇我们已经基本实现了下拉刷新的效果，本篇介绍，嵌套ListView，RecyclerView以及ScrollView时的滑动冲突解决方式。 嵌套ListView我们先看看嵌套了ListView的效果：  在嵌套ListView时，我们的父布局要在什么时候拦截呢？当ListView滑到顶部时，父布局才能下拉。当ListView滑到底部时，父布局才能上拉。那如何判断ListView到达顶部以及底部">
 <meta name="keywords" content="Android开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一步步自定义下拉刷新——自定义下拉刷新组件进阶">
+<meta property="og:title" content="一步步自定义下拉刷新上拉加载——自定义刷新组件进阶">
 <meta property="og:url" content="http://www.fessible.club/2018/01/31/自定义下拉刷新3/index.html">
 <meta property="og:site_name" content="Fessible&#39;s Blog">
 <meta property="og:description" content="上一篇我们已经基本实现了下拉刷新的效果，本篇介绍，嵌套ListView，RecyclerView以及ScrollView时的滑动冲突解决方式。 嵌套ListView我们先看看嵌套了ListView的效果：  在嵌套ListView时，我们的父布局要在什么时候拦截呢？当ListView滑到顶部时，父布局才能下拉。当ListView滑到底部时，父布局才能上拉。那如何判断ListView到达顶部以及底部">
@@ -90,9 +90,9 @@
 <meta property="og:image" content="http://www.fessible.club/2018/01/31/自定义下拉刷新3/listview.gif">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fo2iqrui8bj20b50b0t96.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1egy1fo2iufpl90j20c80cd74z.jpg">
-<meta property="og:updated_time" content="2018-02-05T08:15:32.829Z">
+<meta property="og:updated_time" content="2018-02-08T08:23:08.422Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一步步自定义下拉刷新——自定义下拉刷新组件进阶">
+<meta name="twitter:title" content="一步步自定义下拉刷新上拉加载——自定义刷新组件进阶">
 <meta name="twitter:description" content="上一篇我们已经基本实现了下拉刷新的效果，本篇介绍，嵌套ListView，RecyclerView以及ScrollView时的滑动冲突解决方式。 嵌套ListView我们先看看嵌套了ListView的效果：  在嵌套ListView时，我们的父布局要在什么时候拦截呢？当ListView滑到顶部时，父布局才能下拉。当ListView滑到底部时，父布局才能上拉。那如何判断ListView到达顶部以及底部">
 <meta name="twitter:image" content="http://www.fessible.club/2018/01/31/自定义下拉刷新3/listview.gif">
 
@@ -130,7 +130,7 @@
 
 
 
-  <title>一步步自定义下拉刷新——自定义下拉刷新组件进阶 | Fessible's Blog</title>
+  <title>一步步自定义下拉刷新上拉加载——自定义刷新组件进阶 | Fessible's Blog</title>
   
 
 
@@ -274,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一步步自定义下拉刷新——自定义下拉刷新组件进阶</h1>
+          <h1 class="post-title" itemprop="name headline">一步步自定义下拉刷新上拉加载——自定义刷新组件进阶</h1>
         
 
         <div class="post-meta">
@@ -452,12 +452,12 @@
 
         <li class="post-copyright-link">
           <strong>本文标题：</strong>
-          <a href="http://www.fessible.club/2018/01/31/自定义下拉刷新3/" title="一步步自定义下拉刷新——自定义下拉刷新组件进阶">一步步自定义下拉刷新——自定义下拉刷新组件进阶</a>
+          <a href="http://www.fessible.club/2018/01/31/自定义下拉刷新3/" title="一步步自定义下拉刷新上拉加载——自定义刷新组件进阶">一步步自定义下拉刷新上拉加载——自定义刷新组件进阶</a>
         </li>
 
         <li class="post-copyright-link">
          <strong>本文链接：</strong>
-          <a href="http://www.fessible.club/2018/01/31/自定义下拉刷新3/" title="一步步自定义下拉刷新——自定义下拉刷新组件进阶">http://www.fessible.club/2018/01/31/自定义下拉刷新3/</a>
+          <a href="http://www.fessible.club/2018/01/31/自定义下拉刷新3/" title="一步步自定义下拉刷新上拉加载——自定义刷新组件进阶">http://www.fessible.club/2018/01/31/自定义下拉刷新3/</a>
         </li>
 
         <li class="post-copyright-date">
@@ -490,8 +490,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/31/自定义下拉刷新2/" rel="next" title="一步步自定义下拉刷新——自定义简单的下拉刷新组件">
-                <i class="fa fa-chevron-left"></i> 一步步自定义下拉刷新——自定义简单的下拉刷新组件
+              <a href="/2018/01/31/自定义下拉刷新2/" rel="next" title="一步步自定义下拉刷新上拉加载——自定义简单的刷新组件">
+                <i class="fa fa-chevron-left"></i> 一步步自定义下拉刷新上拉加载——自定义简单的刷新组件
               </a>
             
           </div>
@@ -500,8 +500,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/03/自定义下拉刷新4/" rel="prev" title="一步步自定义下拉刷新——自定义下拉刷新组件优化">
-                一步步自定义下拉刷新——自定义下拉刷新组件优化 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/03/自定义下拉刷新4/" rel="prev" title="一步步自定义下拉刷新上拉加载——自定义刷新组件优化">
+                一步步自定义下拉刷新上拉加载——自定义刷新组件优化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -706,7 +706,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">27.6k</span>
+    <span title="网站字数统计">28.9k</span>
   
 </div>
 

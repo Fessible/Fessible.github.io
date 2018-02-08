@@ -82,7 +82,7 @@
 <meta name="description" content="自定义下拉刷新组件之前，必须要了解什么是事件分发机制。按照顺序阅读，看完郭霖 事件分发机制上，郭霖 事件分发机制下，和鸿洋 事件分发机制上，鸿洋 事件分发机制下以后结合Android开发艺术探索和源码，然后看事件分发机制总结这篇，基本能够掌握事件分发机制了。 事件分发机制的内容对于初学者而言，是反复看，实践过后再理解便能掌握其原理。下面我们简要介绍下事件分发机制，具体内容，请按顺序反复阅读上面提及">
 <meta name="keywords" content="Android开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一步步自定义下拉刷新——事件分发与滑动冲突">
+<meta property="og:title" content="一步步自定义下拉刷新上拉加载——事件分发与滑动冲突">
 <meta property="og:url" content="http://www.fessible.club/2018/01/29/自定义下拉刷新/index.html">
 <meta property="og:site_name" content="Fessible&#39;s Blog">
 <meta property="og:description" content="自定义下拉刷新组件之前，必须要了解什么是事件分发机制。按照顺序阅读，看完郭霖 事件分发机制上，郭霖 事件分发机制下，和鸿洋 事件分发机制上，鸿洋 事件分发机制下以后结合Android开发艺术探索和源码，然后看事件分发机制总结这篇，基本能够掌握事件分发机制了。 事件分发机制的内容对于初学者而言，是反复看，实践过后再理解便能掌握其原理。下面我们简要介绍下事件分发机制，具体内容，请按顺序反复阅读上面提及">
@@ -95,9 +95,9 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/83029c1ely1fnyhps9ddcj20a1078aa3.jpg">
 <meta property="og:image" content="http://www.fessible.club/2018/01/29/自定义下拉刷新/normal.gif">
 <meta property="og:image" content="http://www.fessible.club/2018/01/29/自定义下拉刷新/normal.gif">
-<meta property="og:updated_time" content="2018-02-05T08:15:49.665Z">
+<meta property="og:updated_time" content="2018-02-08T08:22:47.158Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一步步自定义下拉刷新——事件分发与滑动冲突">
+<meta name="twitter:title" content="一步步自定义下拉刷新上拉加载——事件分发与滑动冲突">
 <meta name="twitter:description" content="自定义下拉刷新组件之前，必须要了解什么是事件分发机制。按照顺序阅读，看完郭霖 事件分发机制上，郭霖 事件分发机制下，和鸿洋 事件分发机制上，鸿洋 事件分发机制下以后结合Android开发艺术探索和源码，然后看事件分发机制总结这篇，基本能够掌握事件分发机制了。 事件分发机制的内容对于初学者而言，是反复看，实践过后再理解便能掌握其原理。下面我们简要介绍下事件分发机制，具体内容，请按顺序反复阅读上面提及">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/83029c1ely1fnyo73tkbnj209w03y0sm.jpg">
 
@@ -135,7 +135,7 @@
 
 
 
-  <title>一步步自定义下拉刷新——事件分发与滑动冲突 | Fessible's Blog</title>
+  <title>一步步自定义下拉刷新上拉加载——事件分发与滑动冲突 | Fessible's Blog</title>
   
 
 
@@ -279,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一步步自定义下拉刷新——事件分发与滑动冲突</h1>
+          <h1 class="post-title" itemprop="name headline">一步步自定义下拉刷新上拉加载——事件分发与滑动冲突</h1>
         
 
         <div class="post-meta">
@@ -553,12 +553,12 @@
 
         <li class="post-copyright-link">
           <strong>本文标题：</strong>
-          <a href="http://www.fessible.club/2018/01/29/自定义下拉刷新/" title="一步步自定义下拉刷新——事件分发与滑动冲突">一步步自定义下拉刷新——事件分发与滑动冲突</a>
+          <a href="http://www.fessible.club/2018/01/29/自定义下拉刷新/" title="一步步自定义下拉刷新上拉加载——事件分发与滑动冲突">一步步自定义下拉刷新上拉加载——事件分发与滑动冲突</a>
         </li>
 
         <li class="post-copyright-link">
          <strong>本文链接：</strong>
-          <a href="http://www.fessible.club/2018/01/29/自定义下拉刷新/" title="一步步自定义下拉刷新——事件分发与滑动冲突">http://www.fessible.club/2018/01/29/自定义下拉刷新/</a>
+          <a href="http://www.fessible.club/2018/01/29/自定义下拉刷新/" title="一步步自定义下拉刷新上拉加载——事件分发与滑动冲突">http://www.fessible.club/2018/01/29/自定义下拉刷新/</a>
         </li>
 
         <li class="post-copyright-date">
@@ -601,8 +601,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/31/自定义下拉刷新2/" rel="prev" title="一步步自定义下拉刷新——自定义简单的下拉刷新组件">
-                一步步自定义下拉刷新——自定义简单的下拉刷新组件 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/31/自定义下拉刷新2/" rel="prev" title="一步步自定义下拉刷新上拉加载——自定义简单的刷新组件">
+                一步步自定义下拉刷新上拉加载——自定义简单的刷新组件 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -807,7 +807,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">27.6k</span>
+    <span title="网站字数统计">28.9k</span>
   
 </div>
 
