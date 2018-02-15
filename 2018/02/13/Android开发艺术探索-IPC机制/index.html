@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Fessible&#39;s Blog">
 <meta property="og:description" content="本篇是关于Android开发艺术探索第二章知识IPC机制的读书笔记 什么是IPC机制IPC 是Inter-Process Communication的缩写，含义为进程间的通信或者是跨进程通信。也就是IPC的使用场景是在多进程情况下。什么时候要用到多进程呢？  有些模块由于特殊原因需要在单独的进程中运行。 由于Android内存的限制，为了增大内存通过多进程来扩大内存。 我们通过系统提供的Cont">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-14T15:55:56.437Z">
+<meta property="og:updated_time" content="2018-02-14T16:05:17.249Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android开发艺术探索-IPC机制">
 <meta name="twitter:description" content="本篇是关于Android开发艺术探索第二章知识IPC机制的读书笔记 什么是IPC机制IPC 是Inter-Process Communication的缩写，含义为进程间的通信或者是跨进程通信。也就是IPC的使用场景是在多进程情况下。什么时候要用到多进程呢？  有些模块由于特殊原因需要在单独的进程中运行。 由于Android内存的限制，为了增大内存通过多进程来扩大内存。 我们通过系统提供的Cont">
@@ -336,7 +336,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,559
+                  1,664
                 </span>
               
 
@@ -416,6 +416,7 @@
 <p>SecondActivity</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">SecondActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected <span class="keyword">void</span> onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_second_layout);</span><br><span class="line">        Intent intent = getIntent();</span><br><span class="line">        Person person = (Person) intent.getParcelableExtra(<span class="string">"person"</span>);</span><br><span class="line">        TextView textView = findViewById(R.id.text);</span><br><span class="line">        textView.setText(person.getAge()+<span class="string">"="</span>+person.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们可以通过上面的方式进行Intent传递数据。</p>
+<h3 id="Serializable和Parcelable的对比"><a href="#Serializable和Parcelable的对比" class="headerlink" title="Serializable和Parcelable的对比"></a>Serializable和Parcelable的对比</h3><p>Android应尽量采用Parcelable，效率至上<br>Parcelable的速度是Serializable十倍以上，但是Serializable的代码量比较少，写起来方便。但是使用了反射，序列化过程慢。<br>Parcelable的实现原理是将一个完整的对象进行分解。而分解后的每一部分都是Intent所支持的数据类型，这样也就实现传递对象的功能了</p>
 
       
     </div>
@@ -684,7 +685,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是IPC机制"><span class="nav-number">1.</span> <span class="nav-text">什么是IPC机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列化"><span class="nav-number">2.</span> <span class="nav-text">序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serializable"><span class="nav-number">3.</span> <span class="nav-text">Serializable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parcable"><span class="nav-number">4.</span> <span class="nav-text">Parcable</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是IPC机制"><span class="nav-number">1.</span> <span class="nav-text">什么是IPC机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列化"><span class="nav-number">2.</span> <span class="nav-text">序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serializable"><span class="nav-number">3.</span> <span class="nav-text">Serializable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parcable"><span class="nav-number">4.</span> <span class="nav-text">Parcable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serializable和Parcelable的对比"><span class="nav-number">5.</span> <span class="nav-text">Serializable和Parcelable的对比</span></a></li></ol></div>
             
 
           </div>
@@ -719,7 +720,7 @@
     
       <span class="post-meta-item-text">网站字数统计&#58;</span>
     
-    <span title="网站字数统计">30.4k</span>
+    <span title="网站字数统计">30.6k</span>
   
 </div>
 
